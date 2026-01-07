@@ -1,7 +1,7 @@
 {
-  "buildCommand": "cd ../.. && yarn install && yarn workspace 3a-ecommerce-types build && yarn workspace 3a-ecommerce-utils build && yarn workspace 3a-ecommerce-ui-library build && yarn workspace @e-commerce/seller-app build",
+  "buildCommand": "cd ../.. && yarn workspace 3a-ecommerce-types build && yarn workspace 3a-ecommerce-utils build && yarn workspace 3a-ecommerce-ui-library build && yarn workspace @e-commerce/seller-app build",
   "outputDirectory": "dist",
-  "installCommand": "yarn install",
+  "installCommand": "cd ../.. && yarn install --production=false",
   "framework": "vite",
   "devCommand": "yarn dev",
   "regions": ["iad1"],
