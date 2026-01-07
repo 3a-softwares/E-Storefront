@@ -166,7 +166,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 
     try {
       if (isForgotPassword) {
-        const result = await forgotPasswordService(email);
+        const result = await forgotPasswordService(email, 'seller');
         if (result.success) {
           setSuccessMessage(
             'If an account with that email exists, a password reset link has been sent. Please check your email.'
