@@ -1,5 +1,5 @@
 /** @type {import('jest').Config} */
-const baseConfig = require('../../packages/utils/src/config/jest.frontend.config');
+const baseConfig = require('3a-ecommerce-utils/config/jest.frontend');
 
 module.exports = {
   ...baseConfig,

@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import baseConfig from '../../packages/utils/src/config/tailwind.config';
+import baseConfig from '3a-ecommerce-utils/config/tailwind';
 
 const config: Config = {
   ...(baseConfig as Config),

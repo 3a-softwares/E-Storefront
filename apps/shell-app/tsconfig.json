@@ -1,5 +1,5 @@
 {
-  "extends": "../../packages/utils/src/config/tsconfig.base.json",
+  "extends": "3a-ecommerce-utils/config/tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
     "outDir": "./dist",

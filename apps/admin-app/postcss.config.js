@@ -1,1 +1,1 @@
-module.exports = require('../../packages/utils/src/config/postcss.config');
+module.exports = require('3a-ecommerce-utils/config/postcss');

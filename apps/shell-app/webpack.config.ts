@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const { ModuleFederationPlugin } = require('webpack').container;
-const { createBaseWebpackConfig } = require('../../packages/utils/src/config/webpack.base.config');
+const { createBaseWebpackConfig } = require('3a-ecommerce-utils/config/webpack');
 
 // Remote app URLs - configurable via environment variables
 const ADMIN_APP_URL = process.env.ADMIN_APP_URL || 'http://localhost:3001';
