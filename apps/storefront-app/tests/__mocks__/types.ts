@@ -1,4 +1,4 @@
-// Mock for @e-commerce/types
+// Mock for 3a-ecommerce-types
 
 export interface CartItem {
   id: string;

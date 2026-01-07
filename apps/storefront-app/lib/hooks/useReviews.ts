@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apolloClient } from '../apollo/client';
 import { GQL_QUERIES } from '../apollo/queries/queries';
-import type { ReviewData as Review, ReviewConnection, CreateReviewInput } from '@e-commerce/types';
+import type { ReviewData as Review, ReviewConnection, CreateReviewInput } from '3a-ecommerce-types';
 
 export function useProductReviews(productId: string, page: number = 1, limit: number = 10) {
   return useQuery({

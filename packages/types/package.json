@@ -1,7 +1,7 @@
 {
-  "name": "@3asoftwares/ecommerce-types",
+  "name": "3a-ecommerce-types",
   "version": "1.0.0",
-  "description": "TypeScript type definitions for E-Commerce Microservices Platform",
+  "description": "TypeScript type definitions for 3A Softwares E-Commerce",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -17,7 +17,7 @@
     "src"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean --external @e-commerce/utils --external @3asoftwares/ecommerce-utils",
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean --external 3a-ecommerce-utils",
     "prepublishOnly": "npm run build",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"

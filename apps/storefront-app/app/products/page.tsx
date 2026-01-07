@@ -4,13 +4,13 @@ import { useState, useEffect, useRef } from 'react';
 import { useCartStore } from '@/store/cartStore';
 import { useProducts } from '@/lib/hooks';
 import { useCategories } from '@/lib/hooks/useCategories';
-import type { ProductGraphQL } from '@e-commerce/types';
+import type { ProductGraphQL } from '3a-ecommerce-types';
 import { useToast } from '@/lib/hooks/useToast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faRedo, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams } from 'next/navigation';
 import { ProductCard, ProductCardSkeleton } from '@/components';
-import { Button, Input, Select } from '@e-commerce/ui-library';
+import { Button, Input, Select } from '3a-ecommerce-ui-library';
 
 type Product = ProductGraphQL;
 

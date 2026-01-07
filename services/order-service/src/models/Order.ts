@@ -1,7 +1,7 @@
 
 
 import mongoose, { Document, Schema } from 'mongoose';
-import { OrderStatus, PaymentStatus } from '@e-commerce/types';
+import { OrderStatus, PaymentStatus } from '3a-ecommerce-types';
 
 export interface OrderItem {
   productId: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUIStore } from '../store/uiStore';
-import { clearAuth, getCurrentUser } from '@e-commerce/utils';
-import { Button } from '@e-commerce/ui-library';
+import { clearAuth, getCurrentUser } from '3a-ecommerce-utils';
+import { Button } from '3a-ecommerce-ui-library';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Header } from '../components/Header/Header';
 
-const meta = {
+const meta: Meta<typeof Header> = {
   title: 'Example/Header',
   component: Header,
 
@@ -15,7 +15,7 @@ const meta = {
     onLogout: fn(),
     onCreateAccount: fn(),
   },
-} satisfies Meta<typeof Header>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

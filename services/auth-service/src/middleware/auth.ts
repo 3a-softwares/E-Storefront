@@ -2,7 +2,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { verifyAccessToken, TokenPayload } from '../utils/jwt';
-import { Logger } from '@e-commerce/utils/server';
+import { Logger } from '3a-ecommerce-utils/server';
 
 declare global {
   namespace Express {

@@ -15,8 +15,8 @@ module.exports = {
     ],
   },
   moduleNameMapper: {
-    '^@e-commerce/utils$': '<rootDir>/tests/__mocks__/utils.ts',
-    '^@e-commerce/ui-library$': '<rootDir>/tests/__mocks__/ui-library.tsx',
+    '^3a-ecommerce-utils$': '<rootDir>/tests/__mocks__/utils.ts',
+    '^3a-ecommerce-ui-library$': '<rootDir>/tests/__mocks__/ui-library.tsx',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
   transformIgnorePatterns: ['node_modules/(?!(zustand|@fortawesome)/)'],

@@ -104,4 +104,4 @@ JWT_SECRET=your-jwt-secret
 
 ## Dependencies on Shared Packages
 
-- `@e-commerce/utils` - Shared utilities and Logger
+- `3a-ecommerce-utils` - Shared utilities and Logger

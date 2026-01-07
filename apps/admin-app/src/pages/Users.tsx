@@ -10,8 +10,8 @@ import {
   Select,
   Confirm,
   ToasterBox,
-} from '@e-commerce/ui-library';
-import type { UserGraphQL as User } from '@e-commerce/types';
+} from '3a-ecommerce-ui-library';
+import type { UserGraphQL as User } from '3a-ecommerce-types';
 
 interface ToastState {
   show: boolean;

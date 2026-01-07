@@ -1,6 +1,6 @@
 
 
-import { Product } from '@e-commerce/types';
+import { Product } from '3a-ecommerce-types';
 
 export interface ProductCardProps {
   product: Product;

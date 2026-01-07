@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Select, Spinner, Textarea } from '@e-commerce/ui-library';
+import { Button, Input, Select, Spinner, Textarea } from '3a-ecommerce-ui-library';
 import { productApi, handleApiError } from '../api/client';
 import { ImageUpload } from '../components/ImageUpload';
 import { useSellerAuthStore } from '../store/authStore';

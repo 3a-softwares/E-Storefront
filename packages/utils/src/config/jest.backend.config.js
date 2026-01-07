@@ -16,12 +16,7 @@ module.exports = {
     ],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/**/*.d.ts',
-    '!src/swagger/**',
-    '!src/index.ts',
-  ],
+  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts', '!src/swagger/**', '!src/index.ts'],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
   coverageThreshold: {
@@ -36,7 +31,7 @@ module.exports = {
   testTimeout: 10000,
   verbose: true,
   moduleNameMapper: {
-    '^@e-commerce/utils/server$': '<rootDir>/tests/__mocks__/utils.ts',
-    '^@e-commerce/types$': '<rootDir>/../../packages/types/src/index.ts',
+    '^3a-ecommerce-utils/server$': '<rootDir>/tests/__mocks__/utils.ts',
+    '^3a-ecommerce-types$': '<rootDir>/../../packages/types/src/index.ts',
   },
 };

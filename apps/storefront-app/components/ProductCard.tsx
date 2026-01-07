@@ -8,8 +8,8 @@ import {
   faBox,
   faCheck,
 } from '@fortawesome/free-solid-svg-icons';
-import { formatPrice } from '@e-commerce/utils';
-import { Button } from '@e-commerce/ui-library';
+import { formatPrice } from '3a-ecommerce-utils';
+import { Button } from '3a-ecommerce-ui-library';
 import { useCartStore } from '@/store/cartStore';
 
 interface ProductCardProps {

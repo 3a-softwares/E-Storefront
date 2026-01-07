@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/store/cartStore';
-import { Button, Input } from '@e-commerce/ui-library';
+import { Button, Input } from '3a-ecommerce-ui-library';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,

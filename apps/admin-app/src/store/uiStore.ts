@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { UIState } from '@e-commerce/types';
+import type { UIState } from '3a-ecommerce-types';
 
 export const useUIStore = create<UIState>()(
   persist(

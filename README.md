@@ -1,4 +1,4 @@
-# E-Commerce Microservices Platform
+# E-Commerce
 
 ## 🚀 Project Overview
 
@@ -108,9 +108,9 @@ e-commerce/
 
 | Package                    | Purpose                 | Key Exports                                |
 | -------------------------- | ----------------------- | ------------------------------------------ |
-| **@e-commerce/types**      | TypeScript definitions  | User, Product, Order, Cart types           |
-| **@e-commerce/ui-library** | React component library | Button, Badge, Modal, Spinner (Storybook)  |
-| **@e-commerce/utils**      | Shared utilities        | Logger, Validation, API helpers, Constants |
+| **3a-ecommerce-types**      | TypeScript definitions  | User, Product, Order, Cart types           |
+| **3a-ecommerce-ui-library** | React component library | Button, Badge, Modal, Spinner (Storybook)  |
+| **3a-ecommerce-utils**      | Shared utilities        | Logger, Validation, API helpers, Constants |
 
 ### Complete Tech Stack
 
@@ -342,9 +342,9 @@ Backend Services (services/):
 - coupon-service (4005): Discount codes, Swagger
 
 Shared Packages (packages/):
-- @e-commerce/types: User, Product, Order, Cart TypeScript interfaces
-- @e-commerce/ui-library: Button, Badge, Modal, Spinner, Storybook 8
-- @e-commerce/utils: Logger (server/client), validation, API helpers, constants
+- 3a-ecommerce-types: User, Product, Order, Cart TypeScript interfaces
+- 3a-ecommerce-ui-library: Button, Badge, Modal, Spinner, Storybook 8
+- 3a-ecommerce-utils: Logger (server/client), validation, API helpers, constants
 
 ## Current State
 - All services functional and connected via GraphQL gateway

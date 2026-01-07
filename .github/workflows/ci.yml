@@ -87,13 +87,13 @@ jobs:
       
       - name: Build packages
         run: |
-          yarn workspace @e-commerce/types build
-          yarn workspace @e-commerce/utils build
+          yarn workspace 3a-ecommerce-types build
+          yarn workspace 3a-ecommerce-utils build
       
       - name: Test packages
         run: |
-          yarn workspace @e-commerce/types test --passWithNoTests
-          yarn workspace @e-commerce/utils test --passWithNoTests
+          yarn workspace 3a-ecommerce-types test --passWithNoTests
+          yarn workspace 3a-ecommerce-utils test --passWithNoTests
 
   # ===========================================
   # TEST BACKEND SERVICES

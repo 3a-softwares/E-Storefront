@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone, faMapMarkerAlt, faClock, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { useToast } from '@/lib/hooks/useToast';
-import { Button, Input } from '@e-commerce/ui-library';
+import { Button, Input } from '3a-ecommerce-ui-library';
 
 export default function ContactPage() {
   const { showToast } = useToast();

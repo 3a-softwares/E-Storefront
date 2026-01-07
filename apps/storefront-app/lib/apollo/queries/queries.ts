@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import * as queries from '@e-commerce/utils';
+import * as queries from '3a-ecommerce-utils';
 
 const queryStrings = {
   // Dashboard

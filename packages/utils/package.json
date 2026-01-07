@@ -1,7 +1,7 @@
 {
-  "name": "@3asoftwares/ecommerce-utils",
+  "name": "3a-ecommerce-utils",
   "version": "1.0.0",
-  "description": "Utility functions for E-Commerce Microservices Platform",
+  "description": "Utility functions for 3A Softwares E-Commerce",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -22,7 +22,7 @@
     "src"
   ],
   "scripts": {
-    "build": "tsup src/index.ts src/validation/server.ts --format cjs,esm --dts --clean --external @e-commerce/types --external @3asoftwares/ecommerce-types",
+    "build": "tsup src/index.ts src/validation/server.ts --format cjs,esm --dts --clean --external 3a-ecommerce-types",
     "prepublishOnly": "npm run build",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
@@ -45,7 +45,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@3asoftwares/ecommerce-types": "^1.0.0"
+    "3a-ecommerce-types": "^1.0.0"
   },
   "peerDependencies": {
     "express": "^4.18.2",
@@ -62,8 +62,8 @@
   "devDependencies": {
     "@types/node": "^25.0.3",
     "@vitest/coverage-v8": "^4.0.16",
-    "tsup": "^8.0.0",
-    "typescript": "^5.3.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
     "vitest": "^4.0.16"
   }
 }

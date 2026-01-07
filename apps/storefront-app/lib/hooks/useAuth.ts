@@ -4,15 +4,15 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { apolloClient } from '../apollo/client';
 import { GQL_QUERIES } from '../apollo/queries/queries';
-import type { UserGraphQL } from '@e-commerce/types';
+import type { UserGraphQL } from '3a-ecommerce-types';
 import type {
   LoginInput,
   RegisterInput,
   LoginResponse,
   RegisterResponse,
   MeResponse,
-} from '@e-commerce/types';
-import { storeAuth, clearAuth as clearAuthCookies, getAccessToken } from '@e-commerce/utils';
+} from '3a-ecommerce-types';
+import { storeAuth, clearAuth as clearAuthCookies, getAccessToken } from '3a-ecommerce-utils';
 
 export function useLogin() {
   const queryClient = useQueryClient();

@@ -7,7 +7,7 @@ import {
   UpdateCouponInput,
   PaymentStatus,
   OrderStatus,
-} from '@e-commerce/types';
+} from '3a-ecommerce-types';
 import {
   DASHBOARD_STATS_QUERY,
   GET_USERS_QUERY,
@@ -27,7 +27,7 @@ import {
   CREATE_COUPON_MUTATION,
   UPDATE_COUPON_MUTATION,
   DELETE_COUPON_MUTATION,
-} from '@e-commerce/utils';
+} from '3a-ecommerce-utils';
 
 export const useDashboardStats = () => {
   return useQuery({

@@ -7,8 +7,8 @@ import { connectDatabase } from './config/database';
 import { setupSwagger } from './config/swagger';
 import productRoutes from './routes/productRoutes';
 import reviewRoutes from './routes/reviewRoutes';
-import { PORT_CONFIG, DEFAULT_CORS_ORIGINS } from '@e-commerce/utils';
-import { Logger } from '@e-commerce/utils/server';
+import { PORT_CONFIG, DEFAULT_CORS_ORIGINS } from '3a-ecommerce-utils';
+import { Logger } from '3a-ecommerce-utils/server';
 
 dotenv.config();
 

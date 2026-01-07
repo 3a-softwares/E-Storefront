@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Button, Spinner, ToasterBox } from '@e-commerce/ui-library';
-import { formatIndianCompact } from '@e-commerce/utils';
+import { Button, Spinner, ToasterBox } from '3a-ecommerce-ui-library';
+import { formatIndianCompact } from '3a-ecommerce-utils';
 import { orderApi, handleApiError } from '../api/client';
 import { useSellerAuthStore } from '../store/authStore';
 

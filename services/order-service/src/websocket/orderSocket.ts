@@ -2,8 +2,8 @@
 
 import { Server as SocketIOServer } from 'socket.io';
 import { Server as HTTPServer } from 'http';
-import { DEFAULT_CORS_ORIGINS } from '@e-commerce/utils';
-import { Logger } from '@e-commerce/utils/server';
+import { DEFAULT_CORS_ORIGINS } from '3a-ecommerce-utils';
+import { Logger } from '3a-ecommerce-utils/server';
 
 let io: SocketIOServer | null = null;
 

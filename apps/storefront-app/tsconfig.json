@@ -16,10 +16,10 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@e-commerce/ui-library": ["../../packages/ui-library/src"],
-      "@e-commerce/ui-library/*": ["../../packages/ui-library/src/*"],
-      "@e-commerce/types": ["../../packages/types/src"],
-      "@e-commerce/types/*": ["../../packages/types/src/*"]
+      "3a-ecommerce-ui-library": ["../../packages/ui-library/src"],
+      "3a-ecommerce-ui-library/*": ["../../packages/ui-library/src/*"],
+      "3a-ecommerce-types": ["../../packages/types/src"],
+      "3a-ecommerce-types/*": ["../../packages/types/src/*"]
     }
   },
   "include": [

@@ -10,9 +10,9 @@ export function createBaseViteConfig(rootDir: string): UserConfig {
     },
     resolve: {
       alias: {
-        '@e-commerce/ui-library': path.resolve(rootDir, '../../packages/ui-library/src'),
-        '@e-commerce/types': path.resolve(rootDir, '../../packages/types/src'),
-        '@e-commerce/utils': path.resolve(rootDir, '../../packages/utils/src'),
+        '3a-ecommerce-ui-library': path.resolve(rootDir, '../../packages/ui-library/src'),
+        '3a-ecommerce-types': path.resolve(rootDir, '../../packages/types/src'),
+        '3a-ecommerce-utils': path.resolve(rootDir, '../../packages/utils/src'),
       },
     },
   });

@@ -31,8 +31,8 @@ COPY services/ ./services/
 COPY tsconfig*.json ./
 
 # Build packages first
-RUN yarn workspace @e-commerce/utils build || true
-RUN yarn workspace @e-commerce/types build || true
+RUN yarn workspace 3a-ecommerce-utils build || true
+RUN yarn workspace 3a-ecommerce-types build || true
 
 # Expose ports for all backend services
 EXPOSE 3010 3011 3012 3013 3014 4000

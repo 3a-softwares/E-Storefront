@@ -1,7 +1,7 @@
 
 
 import jwt from 'jsonwebtoken';
-import { UserRole } from '@e-commerce/types';
+import { UserRole } from '3a-ecommerce-types';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'your-refresh-secret';

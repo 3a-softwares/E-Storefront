@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Order from '../models/Order';
-import { OrderStatus, PaymentStatus } from '@e-commerce/types';
-import { Logger } from '@e-commerce/utils/server';
+import { OrderStatus, PaymentStatus } from '3a-ecommerce-types';
+import { Logger } from '3a-ecommerce-utils/server';
 
 export const getAllOrders = async (req: Request, res: Response): Promise<void> => {
   try {

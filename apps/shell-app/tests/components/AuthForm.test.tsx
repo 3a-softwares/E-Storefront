@@ -12,7 +12,7 @@ jest.mock('../../src/services/authService', () => ({
 }));
 
 // Mock utils
-jest.mock('@e-commerce/utils', () => ({
+jest.mock('3a-ecommerce-utils', () => ({
   storeAuth: jest.fn(),
 }));
 

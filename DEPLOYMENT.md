@@ -1,4 +1,4 @@
-# E-Commerce Microservices Platform - Deployment Guide
+# E-Commerce - Deployment Guide
 
 > **100% Free Deployment** - No credit card required
 

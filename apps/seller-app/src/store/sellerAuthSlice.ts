@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { Seller, SellerAuthSliceState } from '@e-commerce/types';
+import type { Seller, SellerAuthSliceState } from '3a-ecommerce-types';
 
 const initialState: SellerAuthSliceState = {
   seller: null,

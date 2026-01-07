@@ -33,8 +33,8 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 # Build packages
-RUN yarn workspace @e-commerce/utils build || true
-RUN yarn workspace @e-commerce/types build || true
+RUN yarn workspace 3a-ecommerce-utils build || true
+RUN yarn workspace 3a-ecommerce-types build || true
 
 # Build all services
 RUN yarn build:all

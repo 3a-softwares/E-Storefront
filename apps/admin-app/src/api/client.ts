@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SERVICE_URLS, GET_USER_BY_ID_QUERY, getAccessToken } from '@e-commerce/utils';
+import { SERVICE_URLS, GET_USER_BY_ID_QUERY, getAccessToken } from '3a-ecommerce-utils';
 
 const GRAPHQL_URL = import.meta.env.VITE_GRAPHQL_URL || SERVICE_URLS.GRAPHQL_GATEWAY;
 

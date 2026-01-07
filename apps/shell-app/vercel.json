@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd ../.. && yarn install && yarn workspace @e-commerce/types build && yarn workspace @e-commerce/utils build && yarn workspace @e-commerce/ui-library build && yarn workspace shell-app build",
+  "buildCommand": "cd ../.. && yarn install && yarn workspace 3a-ecommerce-types build && yarn workspace 3a-ecommerce-utils build && yarn workspace 3a-ecommerce-ui-library build && yarn workspace shell-app build",
   "outputDirectory": "dist",
   "installCommand": "yarn install",
   "framework": null,
@@ -8,7 +8,5 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

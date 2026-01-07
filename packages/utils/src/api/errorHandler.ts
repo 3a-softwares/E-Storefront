@@ -1,4 +1,4 @@
-import { ErrorType } from "@e-commerce/types";
+import { ErrorType } from '3a-ecommerce-types';
 
 export interface AppError {
   type: ErrorType;

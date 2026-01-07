@@ -3,8 +3,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apolloClient } from '../apollo/client';
 import { GQL_QUERIES } from '../apollo/queries/queries';
-import { storeAuth, getStoredAuth } from '@e-commerce/utils';
-import type { SendVerificationEmailResponse, VerifyEmailResponse } from '@e-commerce/types';
+import { storeAuth, getStoredAuth } from '3a-ecommerce-utils';
+import type { SendVerificationEmailResponse, VerifyEmailResponse } from '3a-ecommerce-types';
 
 export function useSendVerificationEmail() {
   const mutation = useMutation({

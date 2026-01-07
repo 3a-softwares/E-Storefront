@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Product from '../models/Product';
 import { CacheService, CacheKeys, CacheTTL } from '../infrastructure/cache';
-import { Logger } from '@e-commerce/utils/server';
+import { Logger } from '3a-ecommerce-utils/server';
 
 export const getAllProducts = async (req: Request, res: Response): Promise<void> => {
   try {

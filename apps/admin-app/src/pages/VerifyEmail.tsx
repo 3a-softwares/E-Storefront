@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../store/store';
 import { setUser } from '../store/authSlice';
-import { Button, Spinner } from '@e-commerce/ui-library';
-import { storeAuth, getStoredAuth } from '@e-commerce/utils';
+import { Button, Spinner } from '3a-ecommerce-ui-library';
+import { storeAuth, getStoredAuth } from '3a-ecommerce-utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCheckCircle,

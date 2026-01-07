@@ -1,5 +1,5 @@
 import { authClient, addAuthHeader } from '../../../clients/serviceClients';
-import { Logger } from '@e-commerce/utils/server';
+import { Logger } from '3a-ecommerce-utils/server';
 
 export const userResolvers = {
   Query: {

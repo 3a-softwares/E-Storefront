@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal } from '@e-commerce/ui-library';
+import { Button, Modal } from '3a-ecommerce-ui-library';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCog,

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Category from '../models/Category';
-import { Logger } from '@e-commerce/utils/server';
+import { Logger } from '3a-ecommerce-utils/server';
 
 export const getAllCategories = async (req: Request, res: Response): Promise<void> => {
   try {

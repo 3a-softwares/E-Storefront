@@ -1,9 +1,9 @@
 import React from 'react';
-import { Header as UIHeader } from '@e-commerce/ui-library';
+import { Header as UIHeader } from '3a-ecommerce-ui-library';
 import { useUIStore } from '../store/uiStore';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { logout } from '../store/authSlice';
-import { SHELL_APP_URL, clearAuth } from '@e-commerce/utils';
+import { SHELL_APP_URL, clearAuth } from '3a-ecommerce-utils';
 
 export const Header: React.FC = () => {
   const { theme, toggleTheme, language, setLanguage } = useUIStore();

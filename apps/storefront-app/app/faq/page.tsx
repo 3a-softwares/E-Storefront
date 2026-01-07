@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faChevronDown, faChevronUp, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Input, Button } from '@e-commerce/ui-library';
+import { Input, Button } from '3a-ecommerce-ui-library';
 
 interface FAQ {
   id: number;

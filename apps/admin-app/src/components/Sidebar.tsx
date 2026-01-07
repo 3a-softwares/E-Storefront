@@ -15,7 +15,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { Button } from '@e-commerce/ui-library';
+import { Button } from '3a-ecommerce-ui-library';
 
 interface NavItem {
   path: string;

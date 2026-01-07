@@ -66,7 +66,7 @@ Shared React component library providing reusable UI components, design tokens, 
 ## Usage
 
 ```typescript
-import { Button, Input, Card, Spinner } from '@e-commerce/ui-library';
+import { Button, Input, Card, Spinner } from '3a-ecommerce-ui-library';
 
 function MyComponent() {
   return (

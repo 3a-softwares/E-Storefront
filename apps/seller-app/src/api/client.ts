@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SERVICE_URLS, SHELL_APP_URL, getAccessToken } from '@e-commerce/utils';
+import { SERVICE_URLS, SHELL_APP_URL, getAccessToken } from '3a-ecommerce-utils';
 
 const AUTH_API = import.meta.env.VITE_AUTH_API || SERVICE_URLS.AUTH_SERVICE;
 const PRODUCT_API = import.meta.env.VITE_PRODUCT_API || SERVICE_URLS.PRODUCT_SERVICE;

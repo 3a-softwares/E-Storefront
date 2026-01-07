@@ -5,6 +5,6 @@ module.exports = {
   ...baseConfig,
   moduleNameMapper: {
     ...baseConfig.moduleNameMapper,
-    '^@e-commerce/types$': '<rootDir>/../../packages/types/src/index.ts',
+    '^3a-ecommerce-types$': '<rootDir>/../../packages/types/src/index.ts',
   },
 };

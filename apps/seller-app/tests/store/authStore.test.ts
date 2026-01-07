@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react';
-import { clearAuth, storeAuth, getStoredAuth } from '@e-commerce/utils';
+import { clearAuth, storeAuth, getStoredAuth } from '3a-ecommerce-utils';
 
 // Create a fresh store for each test
 const createMockStore = () => {

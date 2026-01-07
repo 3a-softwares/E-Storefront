@@ -1,6 +1,6 @@
 
 
-import { UserRole } from '@e-commerce/types';
+import { UserRole } from '3a-ecommerce-types';
 import { Request, Response, NextFunction } from 'express';
 
 export const requireRole = (...allowedRoles: UserRole[]) => {

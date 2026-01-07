@@ -16,7 +16,7 @@ This package is consumed as a workspace dependency:
 ```json
 {
   "dependencies": {
-    "@e-commerce/types": "^1.0.0"
+    "3a-ecommerce-types": "^1.0.0"
   }
 }
 ```
@@ -76,7 +76,7 @@ This package is consumed as a workspace dependency:
 ## Usage
 
 ```typescript
-import { User, Product, Order, ApiResponse } from '@e-commerce/types';
+import { User, Product, Order, ApiResponse } from '3a-ecommerce-types';
 
 const user: User = {
   id: '123',

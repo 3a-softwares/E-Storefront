@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { AdminUser, AdminAuthState } from '@e-commerce/types';
+import type { AdminUser, AdminAuthState } from '3a-ecommerce-types';
 
 const initialState: AdminAuthState = {
   user: null,

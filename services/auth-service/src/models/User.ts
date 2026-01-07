@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
-import { UserRole } from '@e-commerce/types';
+import { UserRole } from '3a-ecommerce-types';
 
 export interface IUser extends Document {
   email: string;

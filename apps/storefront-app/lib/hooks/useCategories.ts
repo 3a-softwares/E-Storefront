@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { useEffect, useMemo } from 'react';
 import { GQL_QUERIES } from '../apollo/queries/queries';
-import type { CategoriesData } from '@e-commerce/types';
+import type { CategoriesData } from '3a-ecommerce-types';
 import { useCategoryStore } from '@/store/categoryStore';
 
 export const useCategories = (options?: { skip?: boolean; forceRefetch?: boolean }) => {

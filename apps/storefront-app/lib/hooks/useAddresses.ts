@@ -3,7 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apolloClient } from '@/lib/apollo/client';
 import { GQL_QUERIES } from '@/lib/apollo/queries/queries';
-import type { AddressData, AddAddressInput, UpdateAddressInput } from '@e-commerce/types';
+import type { AddressData, AddAddressInput, UpdateAddressInput } from '3a-ecommerce-types';
 
 export type { AddressData as Address, AddAddressInput, UpdateAddressInput };
 

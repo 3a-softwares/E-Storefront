@@ -6,10 +6,10 @@ import { useCartStore } from '@/store/cartStore';
 import { useProduct } from '@/lib/hooks';
 import ProductReviews from '@/components/ProductReviews';
 import { useToast } from '@/lib/hooks/useToast';
-import { Button, Input } from '@e-commerce/ui-library';
+import { Button, Input } from '3a-ecommerce-ui-library';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus, faStar } from '@fortawesome/free-solid-svg-icons';
-import { formatPrice } from '@e-commerce/utils';
+import { formatPrice } from '3a-ecommerce-utils';
 
 export default function ProductDetailPage() {
   const params = useParams();

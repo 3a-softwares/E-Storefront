@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 const { ModuleFederationPlugin } = require('webpack').container;
 const { createBaseWebpackConfig } = require('../../packages/utils/src/config/webpack.base.config');
 
@@ -16,6 +17,33 @@ const baseConfig = createBaseWebpackConfig({
 
 module.exports = {
   ...baseConfig,
+  resolve: {
+    ...baseConfig.resolve,
+    alias: {
+      '3a-ecommerce-ui-library': path.resolve(__dirname, '../../packages/ui-library/dist'),
+      '3a-ecommerce-utils': path.resolve(__dirname, '../../packages/utils/dist'),
+      '3a-ecommerce-types': path.resolve(__dirname, '../../packages/types/dist'),
+    },
+    fallback: {
+      crypto: false,
+      url: false,
+      http: false,
+      https: false,
+      http2: false,
+      zlib: false,
+      stream: false,
+      fs: false,
+      path: false,
+      os: false,
+      net: false,
+      tls: false,
+      tty: false,
+      assert: false,
+      util: false,
+      buffer: false,
+      querystring: false,
+    },
+  },
   plugins: [
     ...baseConfig.plugins,
     new ModuleFederationPlugin({
@@ -44,11 +72,9 @@ module.exports = {
       },
     }),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify({
-        NODE_ENV: process.env.NODE_ENV || 'development',
-        ADMIN_APP_URL: ADMIN_APP_URL,
-        SELLER_APP_URL: SELLER_APP_URL,
-      }),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.ADMIN_APP_URL': JSON.stringify(ADMIN_APP_URL),
+      'process.env.SELLER_APP_URL': JSON.stringify(SELLER_APP_URL),
     }),
   ],
 };

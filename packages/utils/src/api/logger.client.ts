@@ -1,4 +1,4 @@
-import { LogLevel } from '@e-commerce/types';
+import { LogLevel } from '3a-ecommerce-types';
 
 export interface LogEntry {
   level: LogLevel;

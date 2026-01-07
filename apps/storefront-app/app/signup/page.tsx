@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useRegister } from '@/lib/hooks/useAuth';
-import { Button, Input } from '@e-commerce/ui-library';
+import { Button, Input } from '3a-ecommerce-ui-library';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import GoogleSignInButton from '@/components/GoogleSignInButton';

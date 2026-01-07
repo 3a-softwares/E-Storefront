@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Spinner } from '@e-commerce/ui-library';
+import { Button, Spinner } from '3a-ecommerce-ui-library';
 import { useSellerAuthStore } from '../store/authStore';
 import { orderApi, handleApiError } from '../api/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { formatIndianCompact } from '@e-commerce/utils';
+import { formatIndianCompact } from '3a-ecommerce-utils';
 import {
   faClipboard,
   faPlus,

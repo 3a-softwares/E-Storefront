@@ -6,8 +6,8 @@ import morgan from 'morgan';
 import { connectDatabase } from './config/database';
 import { setupSwagger } from './config/swagger';
 import categoryRoutes from './routes/categoryRoutes';
-import { DEFAULT_CORS_ORIGINS, PORT_CONFIG } from '@e-commerce/utils';
-import { Logger } from '@e-commerce/utils/server';
+import { DEFAULT_CORS_ORIGINS, PORT_CONFIG } from '3a-ecommerce-utils';
+import { Logger } from '3a-ecommerce-utils/server';
 
 dotenv.config();
 

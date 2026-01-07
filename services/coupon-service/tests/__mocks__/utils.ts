@@ -1,4 +1,4 @@
-// Mock for @e-commerce/utils/server
+// Mock for 3a-ecommerce-utils/server
 export const Logger = {
   info: jest.fn(),
   warn: jest.fn(),

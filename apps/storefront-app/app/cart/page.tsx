@@ -6,9 +6,9 @@ import Link from 'next/link';
 import { useToast } from '@/lib/hooks/useToast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faBox, faSmile, faCheckCircle, faCreditCard, faBuilding, faMobileAlt, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { formatPrice } from '@e-commerce/utils';
+import { formatPrice } from '3a-ecommerce-utils';
 import { PageHeader, EmptyState } from '@/components';
-import { Button } from '@e-commerce/ui-library';
+import { Button } from '3a-ecommerce-ui-library';
 
 export const dynamic = 'force-dynamic';
 

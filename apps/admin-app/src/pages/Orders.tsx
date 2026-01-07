@@ -15,10 +15,10 @@ import {
   Pagination,
   Select,
   Confirm,
-} from '@e-commerce/ui-library';
-import type { OrderGraphQL as Order, OrderStatus, PaymentStatus } from '@e-commerce/types';
-import { PaymentMethodReverse } from '@e-commerce/types';
-import { formatIndianCompact } from '@e-commerce/utils';
+} from '3a-ecommerce-ui-library';
+import type { OrderGraphQL as Order, OrderStatus, PaymentStatus } from '3a-ecommerce-types';
+import { PaymentMethodReverse } from '3a-ecommerce-types';
+import { formatIndianCompact } from '3a-ecommerce-utils';
 
 export const Orders: React.FC = () => {
   const [page, setPage] = useState(1);

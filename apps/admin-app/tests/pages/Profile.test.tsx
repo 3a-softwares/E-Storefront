@@ -13,7 +13,7 @@ jest.mock('../../src/api/client', () => ({
 }));
 
 // Mock utils
-jest.mock('@e-commerce/utils', () => ({
+jest.mock('3a-ecommerce-utils', () => ({
   SEND_VERIFICATION_EMAIL_MUTATION: 'SEND_VERIFICATION_EMAIL_MUTATION',
   VERIFY_EMAIL_MUTATION: 'VERIFY_EMAIL_MUTATION',
   GET_ME_QUERY: 'GET_ME_QUERY',

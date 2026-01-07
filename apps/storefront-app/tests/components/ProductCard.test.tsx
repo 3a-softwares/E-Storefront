@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { formatPrice } from '@e-commerce/utils';
+import { formatPrice } from '3a-ecommerce-utils';
 
 // Mock the cart store
 const mockItems: Array<{ id: string }> = [];

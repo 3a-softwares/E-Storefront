@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Review } from '../models/Review';
-import { Logger } from '@e-commerce/utils/server';
+import { Logger } from '3a-ecommerce-utils/server';
 import Product from '../models/Product';
 
 // Get reviews for a product

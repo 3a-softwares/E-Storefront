@@ -1,6 +1,6 @@
 'use client';
 
-import { Input } from '@e-commerce/ui-library';
+import { Input } from '3a-ecommerce-ui-library';
 import { faCheck, faChevronDown, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useMemo } from 'react';

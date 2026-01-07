@@ -120,4 +120,4 @@ FRONTEND_URL=http://localhost:3000
 
 ## Dependencies on Shared Packages
 
-- `@e-commerce/utils` - Shared utilities and Logger
+- `3a-ecommerce-utils` - Shared utilities and Logger

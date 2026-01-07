@@ -5,7 +5,7 @@ import {
   storeAuth,
   getStoredAuth,
   SHELL_APP_URL,
-} from '@e-commerce/utils';
+} from '3a-ecommerce-utils';
 import { authApi } from '../api/client';
 import { useSellerAuthStore } from './authStore';
 
