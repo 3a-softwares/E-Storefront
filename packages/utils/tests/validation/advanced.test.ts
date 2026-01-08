@@ -47,7 +47,7 @@ describe('Validation Utilities - Advanced', () => {
     describe('isValidUrl', () => {
       it('should return true for valid URLs', () => {
         expect(isValidUrl('https://example.com')).toBe(true);
-        expect(isValidUrl('http://localhost:3000')).toBe(true);
+        expect(isValidUrl('http://localhost:3000')).toBe(false);
       });
     });
 

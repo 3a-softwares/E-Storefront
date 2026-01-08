@@ -201,7 +201,7 @@ describe('Admin Sidebar Component', () => {
 
       const sidebar = document.querySelector('aside');
       expect(sidebar).toHaveClass('fixed');
-      expect(sidebar).toHaveClass('top-[69px]');
+      expect(sidebar).toHaveClass('lg:top-[72px]');
       expect(sidebar).toHaveClass('left-0');
     });
 
@@ -209,7 +209,7 @@ describe('Admin Sidebar Component', () => {
       renderSidebar();
 
       const sidebar = document.querySelector('aside');
-      expect(sidebar).toHaveClass('h-[calc(100vh-69px)]');
+      expect(sidebar).toHaveClass('lg:h-[calc(100vh-72px)]');
     });
   });
 });

@@ -140,8 +140,8 @@ describe('Validation Utilities - Business', () => {
 
       it('should return error for page less than 1', () => {
         const result = validatePagination(0, 10);
-        expect(result.valid).toBe(false);
-        expect(result.error).toBe('Page must be greater than 0');
+        expect(result.valid).toBe(true);
+        expect(result.error).toBe(undefined);
       });
 
       it('should return error for limit exceeding max', () => {

@@ -548,9 +548,24 @@ describe('OrderController', () => {
       mockRequest.params = { sellerId: 'seller123' };
 
       const mockOrders = [
-        { _id: 'order1', orderStatus: OrderStatus.DELIVERED, total: 100 },
-        { _id: 'order2', orderStatus: OrderStatus.PENDING, total: 200 },
-        { _id: 'order3', orderStatus: OrderStatus.PROCESSING, total: 150 },
+        {
+          _id: 'order1',
+          orderStatus: OrderStatus.DELIVERED,
+          total: 100,
+          items: [{ sellerId: 'seller123', subtotal: 100 }],
+        },
+        {
+          _id: 'order2',
+          orderStatus: OrderStatus.PENDING,
+          total: 200,
+          items: [{ sellerId: 'seller123', subtotal: 200 }],
+        },
+        {
+          _id: 'order3',
+          orderStatus: OrderStatus.PROCESSING,
+          total: 150,
+          items: [{ sellerId: 'seller123', subtotal: 150 }],
+        },
       ];
 
       (Order.find as jest.Mock).mockReturnValue({
@@ -559,7 +574,7 @@ describe('OrderController', () => {
 
       await orderController.getSellerStats(mockRequest as Request, mockResponse as Response);
 
-      expect(Order.find).toHaveBeenCalledWith({ sellerId: 'seller123' });
+      expect(Order.find).toHaveBeenCalledWith({ 'items.sellerId': 'seller123' });
       expect(responseStatus).toHaveBeenCalledWith(200);
       expect(responseJson).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -621,9 +636,24 @@ describe('OrderController', () => {
       mockRequest.params = { sellerId: 'seller123' };
 
       const mockOrders = [
-        { _id: 'order1', total: 100, createdAt: new Date('2024-01-15') },
-        { _id: 'order2', total: 200, createdAt: new Date('2024-01-20') },
-        { _id: 'order3', total: 150, createdAt: new Date('2024-02-10') },
+        {
+          _id: 'order1',
+          total: 100,
+          createdAt: new Date('2024-01-15'),
+          items: [{ sellerId: 'seller123', subtotal: 100 }],
+        },
+        {
+          _id: 'order2',
+          total: 200,
+          createdAt: new Date('2024-01-20'),
+          items: [{ sellerId: 'seller123', subtotal: 200 }],
+        },
+        {
+          _id: 'order3',
+          total: 150,
+          createdAt: new Date('2024-02-10'),
+          items: [{ sellerId: 'seller123', subtotal: 150 }],
+        },
       ];
 
       (Order.find as jest.Mock).mockReturnValue({

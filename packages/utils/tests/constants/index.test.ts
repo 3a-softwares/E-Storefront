@@ -15,10 +15,10 @@ describe('Constants', () => {
   describe('PORT_CONFIG', () => {
     it('should have all service ports defined', () => {
       expect(PORT_CONFIG.AUTH_SERVICE).toBe(3011);
-      expect(PORT_CONFIG.PRODUCT_SERVICE).toBe(3011);
-      expect(PORT_CONFIG.ORDER_SERVICE).toBe(3012);
-      expect(PORT_CONFIG.CATEGORY_SERVICE).toBe(3013);
-      expect(PORT_CONFIG.COUPON_SERVICE).toBe(3014);
+      expect(PORT_CONFIG.PRODUCT_SERVICE).toBe(3014);
+      expect(PORT_CONFIG.ORDER_SERVICE).toBe(3015);
+      expect(PORT_CONFIG.CATEGORY_SERVICE).toBe(3012);
+      expect(PORT_CONFIG.COUPON_SERVICE).toBe(3013);
       expect(PORT_CONFIG.GRAPHQL_GATEWAY).toBe(4000);
     });
 
