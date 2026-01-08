@@ -3,9 +3,33 @@
  * For frontend apps, use logger.client.ts instead
  */
 
-import fs from 'fs';
-import path from 'path';
 import { LogLevel } from '@3asoftwares/types';
+
+// Lazy-load fs and path to avoid issues in serverless environments
+let fs: typeof import('fs') | null = null;
+let path: typeof import('path') | null = null;
+
+const getFs = () => {
+  if (!fs) {
+    try {
+      fs = require('fs');
+    } catch {
+      fs = null;
+    }
+  }
+  return fs;
+};
+
+const getPath = () => {
+  if (!path) {
+    try {
+      path = require('path');
+    } catch {
+      path = null;
+    }
+  }
+  return path;
+};
 
 export interface LogEntry {
   level: LogLevel;
@@ -28,8 +52,13 @@ export class Logger {
   private static maxLogs = 1000;
   private static enableConsole = true;
   private static enableFile = false;
-  private static logFilePath = path.join(process.cwd(), 'logs/app.log');
+  private static logFilePath = 'logs/app.log';
   private static logLevel: LogLevel = LogLevel.DEBUG;
+
+  private static getLogFilePath(): string {
+    const p = getPath();
+    return p ? p.join(process.cwd(), this.logFilePath) : this.logFilePath;
+  }
 
   static configure(options: {
     maxLogs?: number;
@@ -62,8 +91,13 @@ export class Logger {
     if (this.logs.length > this.maxLogs) this.logs.shift();
 
     if (this.enableFile) {
-      fs.mkdirSync(path.dirname(this.logFilePath), { recursive: true });
-      fs.appendFileSync(this.logFilePath, JSON.stringify(entry) + '\n');
+      const fsModule = getFs();
+      const pathModule = getPath();
+      if (fsModule && pathModule) {
+        const filePath = this.getLogFilePath();
+        fsModule.mkdirSync(pathModule.dirname(filePath), { recursive: true });
+        fsModule.appendFileSync(filePath, JSON.stringify(entry) + '\n');
+      }
     }
   }
 
@@ -128,8 +162,10 @@ export class Logger {
 
   static clearLogs() {
     this.logs = [];
-    if (this.enableFile && fs.existsSync(this.logFilePath)) {
-      fs.unlinkSync(this.logFilePath);
+    const fsModule = getFs();
+    const filePath = this.getLogFilePath();
+    if (this.enableFile && fsModule && fsModule.existsSync(filePath)) {
+      fsModule.unlinkSync(filePath);
     }
   }
 }

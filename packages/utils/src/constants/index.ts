@@ -35,9 +35,10 @@ export const SERVICE_URLS = {
 };
 
 // DATABASE CONFIGURATION
+// Note: Actual values should come from environment variables
 export const DATABASE_CONFIG = {
-  MONGODB_URI: 'mongodb+srv://admin:admin@cluster0.wei5wdz.mongodb.net/ecommerce?appName=Cluster0',
-  REDIS_URL: 'redis://localhost:6379',
+  MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017/ecommerce',
+  REDIS_URL: process.env.REDIS_URL || 'redis://localhost:6379',
 };
 
 // CORS ALLOWED ORIGINS
