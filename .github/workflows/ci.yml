@@ -109,7 +109,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - run: yarn workspace auth-service test --passWithNoTests
+      - run: yarn workspace @3asoftwares/auth-service test --passWithNoTests
 
   test-product-service:
     runs-on: ubuntu-latest
@@ -122,7 +122,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - run: yarn workspace product-service test --passWithNoTests
+      - run: yarn workspace @3asoftwares/product-service test --passWithNoTests
 
   test-order-service:
     runs-on: ubuntu-latest
@@ -135,7 +135,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - run: yarn workspace order-service test --passWithNoTests
+      - run: yarn workspace @3asoftwares/order-service test --passWithNoTests
 
   # ===========================================
   # TEST FRONTEND APPS
@@ -151,7 +151,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - run: yarn workspace storefront-app test --passWithNoTests
+      - run: yarn workspace @3asoftwares/storefront-app test --passWithNoTests
 
   test-admin-app:
     runs-on: ubuntu-latest
@@ -164,7 +164,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - run: yarn workspace admin-app test --passWithNoTests
+      - run: yarn workspace @3asoftwares/admin-app test --passWithNoTests
 
   test-seller-app:
     runs-on: ubuntu-latest
@@ -177,7 +177,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - run: yarn workspace seller-app test --passWithNoTests
+      - run: yarn workspace @3asoftwares/seller-app test --passWithNoTests
 
   # ===========================================
   # BUILD CHECK (ensures everything compiles)
