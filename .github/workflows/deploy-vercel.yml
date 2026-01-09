@@ -1,0 +1,103 @@
+# Deploy to Vercel on merge to main
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      app:
+        description: 'App to deploy'
+        required: true
+        type: choice
+        options:
+          - storefront-app
+          - admin-app
+          - seller-app
+          - shell-app
+          - all
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID_STOREFRONT: ${{ secrets.VERCEL_PROJECT_ID_STOREFRONT }}
+  VERCEL_PROJECT_ID_ADMIN: ${{ secrets.VERCEL_PROJECT_ID_ADMIN }}
+  VERCEL_PROJECT_ID_SELLER: ${{ secrets.VERCEL_PROJECT_ID_SELLER }}
+  VERCEL_PROJECT_ID_SHELL: ${{ secrets.VERCEL_PROJECT_ID_SHELL }}
+
+jobs:
+  # ===========================================
+  # DEPLOY STOREFRONT APP
+  # ===========================================
+  deploy-storefront:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.app == 'storefront-app' || github.event.inputs.app == 'all' || github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull Vercel Environment
+        working-directory: apps/storefront-app
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_PROJECT_ID: ${{ env.VERCEL_PROJECT_ID_STOREFRONT }}
+
+      - name: Build Project
+        working-directory: apps/storefront-app
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel
+        working-directory: apps/storefront-app
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+  # ===========================================
+  # DEPLOY ADMIN APP
+  # ===========================================
+  deploy-admin:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.app == 'admin-app' || github.event.inputs.app == 'all'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        working-directory: apps/admin-app
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_PROJECT_ID: ${{ env.VERCEL_PROJECT_ID_ADMIN }}
+
+  # ===========================================
+  # DEPLOY SELLER APP
+  # ===========================================
+  deploy-seller:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.app == 'seller-app' || github.event.inputs.app == 'all'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        working-directory: apps/seller-app
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_PROJECT_ID: ${{ env.VERCEL_PROJECT_ID_SELLER }}
