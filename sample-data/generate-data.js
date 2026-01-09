@@ -413,7 +413,6 @@ function main() {
   console.log('Generating sample data based on model schemas...\n');
 
   // Generate hashed passwords
-  console.log('Hashing passwords...');
   HASHED_PASSWORDS = {
     ADMIN: hashPassword(PASSWORDS.ADMIN),
     SELLER: hashPassword(PASSWORDS.SELLER),
