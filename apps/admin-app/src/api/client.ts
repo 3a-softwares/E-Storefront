@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { SERVICE_URLS, GET_USER_BY_ID_QUERY, getAccessToken } from '@3asoftwares/utils';
 
-const GRAPHQL_URL = import.meta.env.VITE_GRAPHQL_URL || SERVICE_URLS.GRAPHQL_GATEWAY;
+const GRAPHQL_URL = process.env.VITE_GRAPHQL_URL || SERVICE_URLS.GRAPHQL_GATEWAY;
 
 export const graphqlClient = axios.create({
   baseURL: GRAPHQL_URL,
