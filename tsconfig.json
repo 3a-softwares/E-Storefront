@@ -61,11 +61,5 @@
       "path": "./services/graphql-gateway"
     }
   ],
-  "exclude": [
-    "node_modules",
-    "**/dist",
-    "**/build",
-    "**/.next"
-  ],
-  "extends": "expo/tsconfig.base"
+  "exclude": ["node_modules", "**/dist", "**/build", "**/.next"]
 }

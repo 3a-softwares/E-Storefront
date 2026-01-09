@@ -83,12 +83,19 @@
     "lint:fix:admin": "yarn workspace @3asoftwares/admin-app run lint:fix",
     "lint:fix:shell": "yarn workspace @3asoftwares/shell-app run lint:fix",
     "lint:fix:seller": "yarn workspace @3asoftwares/seller-app run lint:fix",
-    "lint:fix:frontend": "yarn lint:fix:admin && yarn lint:fix:shell && yarn lint:fix:seller"
+    "lint:fix:frontend": "yarn lint:fix:admin && yarn lint:fix:shell && yarn lint:fix:seller",
+    "health": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1",
+    "health:backend": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1 -Services",
+    "health:frontend": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1 -Frontend",
+    "health:package": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1 -Packages",
+    "health:verbose": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1 -Verbose",
+    "verify:packages": "yarn build:types && yarn build:utils && yarn build:storybook && yarn test:package",
+    "verify:frontend": "yarn build:frontend && yarn test:frontend",
+    "verify:backend": "yarn build:backend && yarn test:backend",
+    "verify:all": "yarn verify:packages && yarn verify:frontend && yarn verify:backend"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "expo": "^54.0.31",
-    "expo-router": "^6.0.21",
     "npm-run-all": "^4.1.5",
     "tsup": "^8.5.1",
     "typescript": "^5.3.0"
