@@ -112,7 +112,7 @@ describe('GoogleSignInButton Component', () => {
       const mockOnError = jest.fn();
       mockGoogleAuth.mockRejectedValue(new Error('Auth failed'));
 
-      render(<GoogleSignInButton onError={mockOnError} />);
+      const { container } = render(<GoogleSignInButton onError={mockOnError} />);
 
       // The error callback would be called when authentication fails
       expect(container).toBeTruthy();
@@ -124,7 +124,7 @@ describe('GoogleSignInButton Component', () => {
       const mockOnSuccess = jest.fn();
       mockGoogleAuth.mockResolvedValue({ user: { id: '1' } });
 
-      render(<GoogleSignInButton onSuccess={mockOnSuccess} />);
+      const { container } = render(<GoogleSignInButton onSuccess={mockOnSuccess} />);
 
       // Success callback would be called after successful auth
       expect(container).toBeTruthy();
@@ -133,7 +133,7 @@ describe('GoogleSignInButton Component', () => {
     it('should redirect to custom path after success', () => {
       process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID = 'test-client-id';
 
-      render(<GoogleSignInButton redirectTo="/dashboard" />);
+      const { container } = render(<GoogleSignInButton redirectTo="/dashboard" />);
 
       // After success, should redirect to /dashboard
       expect(container).toBeTruthy();

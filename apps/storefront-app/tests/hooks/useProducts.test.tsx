@@ -2,6 +2,16 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 
+// Mock GraphQL queries
+jest.mock('../../lib/apollo/queries/queries', () => ({
+  GQL_QUERIES: {
+    GET_PRODUCTS_QUERY: {},
+    GET_PRODUCT_QUERY: {},
+    GET_CATEGORIES_QUERY: {},
+  },
+  getGqlQuery: jest.fn(() => ({})),
+}));
+
 // Mock Apollo client
 jest.mock('../../lib/apollo/client', () => ({
   apolloClient: {

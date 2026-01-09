@@ -2,12 +2,25 @@ import { renderHook, waitFor, act } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 
+// Mock GraphQL queries
+jest.mock('../../lib/apollo/queries/queries', () => ({
+  GQL_QUERIES: {
+    LOGIN_MUTATION: {},
+    REGISTER_MUTATION: {},
+    LOGOUT_MUTATION: {},
+    ME_QUERY: {},
+    REFRESH_TOKEN_MUTATION: {},
+  },
+  getGqlQuery: jest.fn(() => ({})),
+}));
+
 // Mock Apollo client
 jest.mock('../../lib/apollo/client', () => ({
   apolloClient: {
     query: jest.fn(),
     mutate: jest.fn(),
     resetStore: jest.fn(),
+    clearStore: jest.fn(),
   },
 }));
 
@@ -28,7 +41,7 @@ jest.mock('next/navigation', () => ({
 
 import { apolloClient } from '../../lib/apollo/client';
 import { storeAuth, clearAuth, getAccessToken } from '@3asoftwares/utils/client';
-import { useLogin, useRegister, useLogout, useMe } from '../../lib/hooks/useAuth';
+import { useLogin, useRegister, useLogout, useCurrentUser } from '../../lib/hooks/useAuth';
 
 const mockApolloClient = apolloClient as jest.Mocked<typeof apolloClient>;
 const mockStoreAuth = storeAuth as jest.Mock;
@@ -186,7 +199,7 @@ describe('useLogout', () => {
     (mockApolloClient.mutate as jest.Mock).mockResolvedValue({
       data: { logout: { success: true } },
     });
-    (mockApolloClient.resetStore as jest.Mock).mockResolvedValue(undefined);
+    (mockApolloClient.clearStore as jest.Mock).mockResolvedValue(undefined);
 
     const { result } = renderHook(() => useLogout(), {
       wrapper: createWrapper(),
@@ -197,11 +210,11 @@ describe('useLogout', () => {
     });
 
     expect(mockClearAuth).toHaveBeenCalled();
-    expect(mockApolloClient.resetStore).toHaveBeenCalled();
+    expect(mockApolloClient.clearStore).toHaveBeenCalled();
   });
 });
 
-describe('useMe', () => {
+describe('useCurrentUser', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -213,7 +226,7 @@ describe('useMe', () => {
       data: { me: mockUser },
     });
 
-    const { result } = renderHook(() => useMe(), {
+    const { result } = renderHook(() => useCurrentUser(), {
       wrapper: createWrapper(),
     });
 
@@ -227,12 +240,15 @@ describe('useMe', () => {
   it('should handle unauthenticated state', async () => {
     (mockApolloClient.query as jest.Mock).mockRejectedValue(new Error('Unauthorized'));
 
-    const { result } = renderHook(() => useMe(), {
+    const { result } = renderHook(() => useCurrentUser(), {
       wrapper: createWrapper(),
     });
 
     await waitFor(() => {
-      expect(result.current.isError).toBe(true);
+      expect(result.current.isSuccess).toBe(true);
     });
+
+    // useCurrentUser catches errors and returns null
+    expect(result.current.data).toBeNull();
   });
 });
