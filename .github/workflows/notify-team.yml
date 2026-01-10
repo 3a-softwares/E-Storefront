@@ -1,0 +1,111 @@
+# Notify team on deployment events
+name: Team Notifications
+
+on:
+  workflow_run:
+    workflows: ["Deploy to Vercel", "CI/CD Pipeline"]
+    types: [completed]
+
+jobs:
+  # ===========================================
+  # SUCCESS NOTIFICATION
+  # ===========================================
+  notify-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Success Summary
+        run: |
+          echo "✅ =============================================="
+          echo "✅ WORKFLOW SUCCEEDED"
+          echo "✅ =============================================="
+          echo "✅ Workflow: ${{ github.event.workflow_run.name }}"
+          echo "✅ Branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "✅ Triggered by: ${{ github.event.workflow_run.actor.login }}"
+          echo "✅ Commit: ${{ github.event.workflow_run.head_sha }}"
+          echo "✅ =============================================="
+
+      # Uncomment and configure for Slack notifications
+      # - name: Slack Notification
+      #   if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: success
+      #     fields: repo,message,commit,author,workflow,ref
+      #     text: '✅ Deployment successful!'
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # Uncomment and configure for Discord notifications
+      # - name: Discord Notification
+      #   if: ${{ secrets.DISCORD_WEBHOOK_URL != '' }}
+      #   uses: sarisia/actions-status-discord@v1
+      #   with:
+      #     webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      #     status: success
+      #     title: "Deployment Successful"
+      #     description: |
+      #       **Workflow:** ${{ github.event.workflow_run.name }}
+      #       **Branch:** ${{ github.event.workflow_run.head_branch }}
+      #       **By:** ${{ github.event.workflow_run.actor.login }}
+
+  # ===========================================
+  # FAILURE NOTIFICATION
+  # ===========================================
+  notify-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - name: Failure Summary
+        run: |
+          echo "❌ =============================================="
+          echo "❌ WORKFLOW FAILED"
+          echo "❌ =============================================="
+          echo "❌ Workflow: ${{ github.event.workflow_run.name }}"
+          echo "❌ Branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "❌ Triggered by: ${{ github.event.workflow_run.actor.login }}"
+          echo "❌ Commit: ${{ github.event.workflow_run.head_sha }}"
+          echo "❌ View logs: ${{ github.event.workflow_run.html_url }}"
+          echo "❌ =============================================="
+
+      # Uncomment and configure for Slack notifications
+      # - name: Slack Notification
+      #   if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: failure
+      #     fields: repo,message,commit,author,workflow,ref
+      #     text: '❌ Deployment failed! Check the logs.'
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # Uncomment and configure for Discord notifications
+      # - name: Discord Notification
+      #   if: ${{ secrets.DISCORD_WEBHOOK_URL != '' }}
+      #   uses: sarisia/actions-status-discord@v1
+      #   with:
+      #     webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      #     status: failure
+      #     title: "Deployment Failed"
+      #     description: |
+      #       **Workflow:** ${{ github.event.workflow_run.name }}
+      #       **Branch:** ${{ github.event.workflow_run.head_branch }}
+      #       **By:** ${{ github.event.workflow_run.actor.login }}
+      #       [View Logs](${{ github.event.workflow_run.html_url }})
+
+  # ===========================================
+  # CANCELLED NOTIFICATION
+  # ===========================================
+  notify-cancelled:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'cancelled' }}
+    steps:
+      - name: Cancelled Summary
+        run: |
+          echo "⚠️ =============================================="
+          echo "⚠️ WORKFLOW CANCELLED"
+          echo "⚠️ =============================================="
+          echo "⚠️ Workflow: ${{ github.event.workflow_run.name }}"
+          echo "⚠️ Branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "⚠️ Triggered by: ${{ github.event.workflow_run.actor.login }}"
+          echo "⚠️ =============================================="

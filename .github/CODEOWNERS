@@ -1,0 +1,51 @@
+# =============================================
+# E-Commerce Platform - Code Owners
+# =============================================
+# These owners will be automatically requested for
+# review when someone opens a pull request.
+#
+# Format: <pattern> <@owner1> <@owner2> ...
+# Replace usernames below with your actual team members
+
+# Default owners for everything
+* 3asoftwares
+
+# ===========================================
+# FRONTEND APPS
+# ===========================================
+/apps/storefront-app/    erabhishek17jain
+/apps/admin-app/         erabhishek17jain
+/apps/seller-app/        erabhishek17jain
+/apps/shell-app/         erabhishek17jain
+
+# ===========================================
+# BACKEND SERVICES
+# ===========================================
+/services/auth-service/      erabhishek17jain
+/services/product-service/   erabhishek17jain
+/services/order-service/     erabhishek17jain
+/services/category-service/  erabhishek17jain
+/services/coupon-service/    erabhishek17jain
+/services/graphql-gateway/   erabhishek17jain
+
+# ===========================================
+# SHARED PACKAGES
+# ===========================================
+/packages/types/        erabhishek17jain erabhishek17jain
+/packages/utils/        erabhishek17jain erabhishek17jain
+/packages/ui-library/   erabhishek17jain
+
+# ===========================================
+# INFRASTRUCTURE & DEVOPS
+# ===========================================
+/k8s/                   erabhishek17jain
+/nginx/                 erabhishek17jain
+/.github/               erabhishek17jain 3asoftwares
+/docker-compose*.yml    erabhishek17jain
+/Dockerfile*            erabhishek17jain
+
+# ===========================================
+# DOCUMENTATION
+# ===========================================
+/docs/                  3asoftwares
+*.md                    3asoftwares

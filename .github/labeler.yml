@@ -1,0 +1,119 @@
+# Labeler configuration for automatic PR labeling
+# Labels are applied based on file paths changed in the PR
+
+# ===========================================
+# APP LABELS
+# ===========================================
+'app: storefront':
+  - changed-files:
+      - any-glob-to-any-file: 'apps/storefront-app/**'
+
+'app: admin':
+  - changed-files:
+      - any-glob-to-any-file: 'apps/admin-app/**'
+
+'app: seller':
+  - changed-files:
+      - any-glob-to-any-file: 'apps/seller-app/**'
+
+'app: shell':
+  - changed-files:
+      - any-glob-to-any-file: 'apps/shell-app/**'
+
+# ===========================================
+# SERVICE LABELS
+# ===========================================
+'service: auth':
+  - changed-files:
+      - any-glob-to-any-file: 'services/auth-service/**'
+
+'service: product':
+  - changed-files:
+      - any-glob-to-any-file: 'services/product-service/**'
+
+'service: order':
+  - changed-files:
+      - any-glob-to-any-file: 'services/order-service/**'
+
+'service: category':
+  - changed-files:
+      - any-glob-to-any-file: 'services/category-service/**'
+
+'service: coupon':
+  - changed-files:
+      - any-glob-to-any-file: 'services/coupon-service/**'
+
+'service: graphql':
+  - changed-files:
+      - any-glob-to-any-file: 'services/graphql-gateway/**'
+
+# ===========================================
+# PACKAGE LABELS
+# ===========================================
+'pkg: types':
+  - changed-files:
+      - any-glob-to-any-file: 'packages/types/**'
+
+'pkg: utils':
+  - changed-files:
+      - any-glob-to-any-file: 'packages/utils/**'
+
+'pkg: ui-library':
+  - changed-files:
+      - any-glob-to-any-file: 'packages/ui-library/**'
+
+# ===========================================
+# INFRASTRUCTURE LABELS
+# ===========================================
+'infra: docker':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'Dockerfile*'
+          - 'docker-compose*.yml'
+
+'infra: k8s':
+  - changed-files:
+      - any-glob-to-any-file: 'k8s/**'
+
+'infra: nginx':
+  - changed-files:
+      - any-glob-to-any-file: 'nginx/**'
+
+'infra: ci/cd':
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
+
+# ===========================================
+# TYPE LABELS
+# ===========================================
+'type: documentation':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - 'docs/**'
+
+'type: config':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.json'
+          - '**/*.yml'
+          - '**/*.yaml'
+          - '**/.*rc'
+          - '**/*.config.*'
+
+'type: tests':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.test.*'
+          - '**/*.spec.*'
+          - '**/tests/**'
+          - '**/__tests__/**'
+
+# ===========================================
+# SIZE LABELS (based on lines changed)
+# ===========================================
+'size: XS':
+  - changed-files:
+      - any-glob-to-any-file: '**/*'
+    all:
+      - head-branch: '^(?!main|develop).*$'
