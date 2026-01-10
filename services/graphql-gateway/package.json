@@ -11,7 +11,6 @@
     "test": "echo \"No tests yet\""
   },
   "dependencies": {
-    "@3asoftwares/types": "^1.0.2",
     "@3asoftwares/utils": "^1.0.7",
     "@apollo/server": "^4.10.0",
     "@as-integrations/next": "^3.0.0",
