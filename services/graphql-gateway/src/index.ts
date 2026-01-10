@@ -5,12 +5,21 @@ import express from 'express';
 import { createServer } from 'http';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
 import { typeDefs } from './schema/typeDefs';
 import { resolvers } from './schema/resolvers';
 import { PORT_CONFIG, DEFAULT_CORS_ORIGINS } from '@3asoftwares/utils';
 import { Logger } from '@3asoftwares/utils/server';
 
-dotenv.config();
+// Load .env.local first, then .env as fallback
+const envLocalPath = path.resolve(__dirname, '../.env.local');
+const envPath = path.resolve(__dirname, '../.env');
+if (fs.existsSync(envLocalPath)) {
+  dotenv.config({ path: envLocalPath });
+} else {
+  dotenv.config({ path: envPath });
+}
 
 // Configure logger for GraphQL Gateway
 Logger.configure({

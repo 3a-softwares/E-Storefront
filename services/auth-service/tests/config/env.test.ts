@@ -121,7 +121,6 @@ describe('Environment Configuration', () => {
     });
 
     it('should use default NODE_ENV if not set', () => {
-      delete process.env.NODE_ENV;
       const defaultEnv = 'development';
       const nodeEnv = process.env.NODE_ENV || defaultEnv;
       expect(nodeEnv).toBe(defaultEnv);

@@ -8,7 +8,7 @@ if (process.env.NEXT_PUBLIC_ENV !== 'production') {
   loadDevMessages();
   loadErrorMessages();
 }
-
+console.log('Environments:', process.env.NEXT_PUBLIC_GRAPHQL_URL);
 const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:4000/graphql';
 
 const httpLink = new HttpLink({

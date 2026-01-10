@@ -1,7 +1,17 @@
 const webpack = require('webpack');
 const path = require('path');
+const fs = require('fs');
 const { ModuleFederationPlugin } = require('webpack').container;
 const { createBaseWebpackConfig } = require('@3asoftwares/utils/config/webpack');
+
+// Load environment variables from .env.local or .env
+const dotenv = require('dotenv');
+const envLocalPath = path.resolve(__dirname, '.env.local');
+
+// Prefer .env.local over .env
+if (fs.existsSync(envLocalPath)) {
+  dotenv.config({ path: envLocalPath });
+}
 
 // Remote app URLs - configurable via environment variables
 const ADMIN_APP_URL = process.env.ADMIN_APP_URL || 'http://localhost:3001';

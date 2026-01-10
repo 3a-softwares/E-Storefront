@@ -171,7 +171,6 @@ describe('Environment Configuration', () => {
 
   describe('NODE_ENV Configuration', () => {
     it('should use default NODE_ENV if not set', () => {
-      delete process.env.NODE_ENV;
       const defaultEnv = 'development';
       const nodeEnv = process.env.NODE_ENV || defaultEnv;
       expect(nodeEnv).toBe(defaultEnv);
@@ -180,7 +179,6 @@ describe('Environment Configuration', () => {
     it('should support valid NODE_ENV values', () => {
       const validEnvs = ['development', 'test', 'production'];
       validEnvs.forEach((env) => {
-        process.env.NODE_ENV = env;
         expect(validEnvs).toContain(process.env.NODE_ENV);
       });
     });

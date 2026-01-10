@@ -1,5 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -11,7 +13,14 @@ import addressRoutes from './routes/addressRoutes';
 import { PORT_CONFIG, DEFAULT_CORS_ORIGINS } from '@3asoftwares/utils';
 import { Logger } from '@3asoftwares/utils/server';
 
-dotenv.config();
+// Load .env.local first, then .env as fallback
+const envLocalPath = path.resolve(__dirname, '../.env.local');
+const envPath = path.resolve(__dirname, '../.env');
+if (fs.existsSync(envLocalPath)) {
+  dotenv.config({ path: envLocalPath });
+} else {
+  dotenv.config({ path: envPath });
+}
 
 // Check if running on Vercel (serverless environment)
 const isVercel = process.env.VERCEL === '1';

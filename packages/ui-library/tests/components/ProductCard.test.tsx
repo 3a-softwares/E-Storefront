@@ -1,4 +1,3 @@
-import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '../../src/test-utils';
 import { ProductCard } from '../../src/components/ProductCard/ProductCard';

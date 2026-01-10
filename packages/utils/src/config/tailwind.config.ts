@@ -64,6 +64,7 @@ const baseConfig = {
         },
       },
     ],
+    logs: false, // Suppress daisyUI console output
   },
 };
 
