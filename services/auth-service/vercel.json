@@ -2,6 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "name": "ecommerce-auth-service",
+  "framework": null,
+  "installCommand": "cd ../.. && yarn install",
+  "buildCommand": "cd ../.. && yarn build:types && yarn build:utils && cd services/auth-service && yarn build",
   "builds": [
     {
       "src": "api/index.ts",
