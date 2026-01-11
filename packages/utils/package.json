@@ -1,6 +1,6 @@
 {
   "name": "@3asoftwares/utils",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "Utility functions for 3A Softwares E-Commerce",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -44,8 +44,7 @@
   },
   "files": [
     "dist",
-    "src",
-    "config"
+    "src/config"
   ],
   "scripts": {
     "build": "tsup",
@@ -59,20 +58,29 @@
     "utils",
     "utilities",
     "typescript",
-    "microservices"
+    "microservices",
+    "3asoftwares"
   ],
   "author": "3aSoftwares",
   "license": "MIT",
+  "homepage": "https://github.com/3asoftwares/E-Commerce#readme",
+  "bugs": {
+    "url": "https://github.com/3asoftwares/E-Commerce/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/3asoftwares/E-Commerce-Microservices-Platform.git",
+    "url": "https://github.com/3asoftwares/E-Commerce.git",
     "directory": "packages/utils"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
-    "@3asoftwares/types": "^1.0.0"
+    "@3asoftwares/types": "^1.0.3"
   },
   "peerDependencies": {
     "express": "^4.18.2",

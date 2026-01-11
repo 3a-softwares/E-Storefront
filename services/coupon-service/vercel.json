@@ -1,18 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "framework": null,
-  "installCommand": "cd ../.. && yarn install && yarn build:types && yarn build:utils",
-  "buildCommand": "yarn build:vercel",
-  "functions": {
-    "api/index.js": {
-      "includeFiles": ".vercel-build/**"
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/api/index.js"
+      "dest": "/api/index.ts"
     }
   ]
 }

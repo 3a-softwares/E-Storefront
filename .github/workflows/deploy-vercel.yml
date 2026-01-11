@@ -1,12 +1,8 @@
-# Deploy to Vercel on merge to main (with 6-hour throttle)
+# Deploy to Vercel - Manual trigger only
 name: Deploy to Vercel
 
 on:
-  push:
-    branches: [main]
-  # Scheduled deployment every 6 hours (if there are pending changes)
-  schedule:
-    - cron: '0 */6 * * *'  # Run every 6 hours
+  # Manual deployment only - no auto deploy on push
   workflow_dispatch:
     inputs:
       app:

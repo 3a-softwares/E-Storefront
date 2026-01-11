@@ -8,8 +8,7 @@ services:
     region: oregon
     plan: free
     rootDir: services/coupon-service
-    buildCommand: |
-      cd ../.. && yarn install && yarn build:types && yarn build:utils && cd services/coupon-service && yarn build
+    buildCommand: yarn install && yarn build
     startCommand: yarn start
     envVars:
       - key: NODE_ENV

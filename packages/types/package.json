@@ -1,6 +1,6 @@
 {
   "name": "@3asoftwares/types",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "TypeScript type definitions for 3A Softwares E-Commerce",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -13,11 +13,10 @@
     }
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean --external 3asoftwares/utils",
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "prepublishOnly": "npm run build",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
@@ -26,17 +25,26 @@
     "ecommerce",
     "types",
     "typescript",
-    "microservices"
+    "microservices",
+    "3asoftwares"
   ],
   "author": "3aSoftwares",
   "license": "MIT",
+  "homepage": "https://github.com/3asoftwares/E-Commerce#readme",
+  "bugs": {
+    "url": "https://github.com/3asoftwares/E-Commerce/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/3asoftwares/E-Commerce-Microservices-Platform.git",
+    "url": "git+https://github.com/3asoftwares/E-Commerce.git",
     "directory": "packages/types"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "tsup": "^8.0.0",
