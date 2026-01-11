@@ -18,7 +18,7 @@ COPY services/product-service ./services/product-service
 COPY tsconfig.json ./
 
 RUN yarn workspace @3asoftwares/types build && \
-    yarn workspace @3asoftwares/utils build && \
+    yarn workspace @3asoftwares/utils build:backend && \
     cd services/product-service && yarn build
 
 FROM node:20-alpine

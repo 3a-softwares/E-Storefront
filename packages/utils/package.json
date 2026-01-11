@@ -48,6 +48,7 @@
   ],
   "scripts": {
     "build": "tsup",
+    "build:backend": "tsup --config tsup.backend.config.ts",
     "build:full": "tsup",
     "prepublishOnly": "npm run build",
     "test": "vitest",

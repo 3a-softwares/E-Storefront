@@ -27,7 +27,7 @@ COPY tsconfig.json ./
 
 # Build packages and service
 RUN yarn workspace @3asoftwares/types build && \
-    yarn workspace @3asoftwares/utils build && \
+    yarn workspace @3asoftwares/utils build:backend && \
     cd services/auth-service && yarn build
 
 # Production image
