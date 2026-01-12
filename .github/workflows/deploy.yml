@@ -13,42 +13,11 @@ env:
 
 jobs:
   # ===========================================
-  # BUILD
-  # ===========================================
-  build:
-    name: 🔨 Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build packages
-        run: |
-          yarn build:types
-          yarn build:utils
-          yarn build:storybook
-
-      - name: Build Shell App
-        run: yarn build:shell
-
-      - name: Build Auth Service
-        run: yarn build:auth
-
-  # ===========================================
   # DEPLOY SHELL APP TO VERCEL
   # ===========================================
   deploy-shell:
     name: 🚀 Deploy Shell App (Vercel)
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - uses: actions/checkout@v4
 
@@ -65,7 +34,7 @@ jobs:
         run: |
           yarn build:types
           yarn build:utils
-          yarn build:storybook
+          yarn workspace @3asoftwares/ui run build
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -90,7 +59,6 @@ jobs:
   deploy-auth:
     name: 🚀 Deploy Auth Service (Railway)
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - uses: actions/checkout@v4
 
@@ -102,4 +70,4 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           cd services/auth-service
-          railway up --detach --service auth-service
+          railway up --detach
