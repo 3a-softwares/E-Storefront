@@ -6,9 +6,12 @@ on:
     types: [completed]
     branches: [main]
 
+concurrency:
+  group: publish-packages-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
   NODE_VERSION: '20'
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   DEPLOY_COOLDOWN_HOURS: 3
 
 jobs:
@@ -62,8 +65,10 @@ jobs:
     needs: detect-changes
     steps:
       - name: Check NPM Token
+        env:
+          HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
         run: |
-          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+          if [ "$HAS_NPM_TOKEN" != "true" ]; then
             echo "❌ Missing NPM_TOKEN secret" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi

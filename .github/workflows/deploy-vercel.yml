@@ -6,9 +6,11 @@ on:
     types: [completed]
     branches: [main]
 
+concurrency:
+  group: deploy-vercel-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   NODE_VERSION: '20'
   DEPLOY_COOLDOWN_HOURS: 3
 
@@ -69,13 +71,19 @@ jobs:
     needs: detect-changes
     steps:
       - name: Check Required Secrets
+        env:
+          HAS_VERCEL_ORG: ${{ secrets.VERCEL_ORG_ID != '' }}
+          HAS_VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN != '' }}
+          HAS_ADMIN_PROJECT: ${{ secrets.ADMIN_VERCEL_PROJECT_ID != '' }}
+          HAS_SELLER_PROJECT: ${{ secrets.SELLER_VERCEL_PROJECT_ID != '' }}
+          HAS_SHELL_PROJECT: ${{ secrets.SHELL_VERCEL_PROJECT_ID != '' }}
         run: |
           missing=""
-          if [ -z "${{ secrets.VERCEL_ORG_ID }}" ]; then missing="$missing VERCEL_ORG_ID"; fi
-          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then missing="$missing VERCEL_TOKEN"; fi
-          if [ -z "${{ secrets.ADMIN_VERCEL_PROJECT_ID }}" ]; then missing="$missing ADMIN_VERCEL_PROJECT_ID"; fi
-          if [ -z "${{ secrets.SELLER_VERCEL_PROJECT_ID }}" ]; then missing="$missing SELLER_VERCEL_PROJECT_ID"; fi
-          if [ -z "${{ secrets.SHELL_VERCEL_PROJECT_ID }}" ]; then missing="$missing SHELL_VERCEL_PROJECT_ID"; fi
+          if [ "$HAS_VERCEL_ORG" != "true" ]; then missing="$missing VERCEL_ORG_ID"; fi
+          if [ "$HAS_VERCEL_TOKEN" != "true" ]; then missing="$missing VERCEL_TOKEN"; fi
+          if [ "$HAS_ADMIN_PROJECT" != "true" ]; then missing="$missing ADMIN_VERCEL_PROJECT_ID"; fi
+          if [ "$HAS_SELLER_PROJECT" != "true" ]; then missing="$missing SELLER_VERCEL_PROJECT_ID"; fi
+          if [ "$HAS_SHELL_PROJECT" != "true" ]; then missing="$missing SHELL_VERCEL_PROJECT_ID"; fi
           
           if [ -n "$missing" ]; then
             echo "❌ Missing required secrets:$missing" >> $GITHUB_STEP_SUMMARY
@@ -92,9 +100,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [detect-changes, validate-secrets]
     if: needs.detect-changes.outputs.apps-admin == 'true'
-    environment:
-      name: admin-production
-      url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -160,12 +165,14 @@ jobs:
         if: steps.check-cooldown.outputs.deploy == 'true'
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.ADMIN_VERCEL_PROJECT_ID }}
 
       - name: Build Admin App
         if: steps.check-cooldown.outputs.deploy == 'true'
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.ADMIN_VERCEL_PROJECT_ID }}
 
       - name: Deploy to Vercel
@@ -177,6 +184,7 @@ jobs:
           echo "### 🚀 Admin App Deployed" >> $GITHUB_STEP_SUMMARY
           echo "**URL:** $url" >> $GITHUB_STEP_SUMMARY
         env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.ADMIN_VERCEL_PROJECT_ID }}
 
       - name: Save Deploy State (Success)
@@ -206,9 +214,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [detect-changes, validate-secrets]
     if: needs.detect-changes.outputs.apps-seller == 'true'
-    environment:
-      name: seller-production
-      url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -273,12 +278,14 @@ jobs:
         if: steps.check-cooldown.outputs.deploy == 'true'
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.SELLER_VERCEL_PROJECT_ID }}
 
       - name: Build Seller App
         if: steps.check-cooldown.outputs.deploy == 'true'
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.SELLER_VERCEL_PROJECT_ID }}
 
       - name: Deploy to Vercel
@@ -290,6 +297,7 @@ jobs:
           echo "### 🚀 Seller App Deployed" >> $GITHUB_STEP_SUMMARY
           echo "**URL:** $url" >> $GITHUB_STEP_SUMMARY
         env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.SELLER_VERCEL_PROJECT_ID }}
 
       - name: Save Deploy State (Success)
@@ -319,9 +327,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [detect-changes, validate-secrets]
     if: needs.detect-changes.outputs.apps-shell == 'true'
-    environment:
-      name: shell-production
-      url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -386,12 +391,14 @@ jobs:
         if: steps.check-cooldown.outputs.deploy == 'true'
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.SHELL_VERCEL_PROJECT_ID }}
 
       - name: Build Shell App
         if: steps.check-cooldown.outputs.deploy == 'true'
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.SHELL_VERCEL_PROJECT_ID }}
 
       - name: Deploy to Vercel
@@ -403,6 +410,7 @@ jobs:
           echo "### 🚀 Shell App Deployed" >> $GITHUB_STEP_SUMMARY
           echo "**URL:** $url" >> $GITHUB_STEP_SUMMARY
         env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.SHELL_VERCEL_PROJECT_ID }}
 
       - name: Save Deploy State (Success)

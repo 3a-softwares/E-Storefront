@@ -6,8 +6,11 @@ on:
     types: [completed]
     branches: [main]
 
+concurrency:
+  group: deploy-railway-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
-  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
   NODE_VERSION: '20'
   DEPLOY_COOLDOWN_HOURS: 3
 
@@ -80,8 +83,10 @@ jobs:
     needs: detect-changes
     steps:
       - name: Check Required Secrets
+        env:
+          HAS_RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN != '' }}
         run: |
-          if [ -z "${{ secrets.RAILWAY_TOKEN }}" ]; then
+          if [ "$HAS_RAILWAY_TOKEN" != "true" ]; then
             echo "❌ Missing RAILWAY_TOKEN secret" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
@@ -136,6 +141,8 @@ jobs:
 
       - name: Deploy to Railway
         if: steps.check-cooldown.outputs.deploy == 'true'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           cd services/auth-service
           railway up --detach
@@ -209,6 +216,8 @@ jobs:
 
       - name: Deploy to Railway
         if: steps.check-cooldown.outputs.deploy == 'true'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           cd services/category-service
           railway up --detach
@@ -282,6 +291,8 @@ jobs:
 
       - name: Deploy to Railway
         if: steps.check-cooldown.outputs.deploy == 'true'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           cd services/coupon-service
           railway up --detach
@@ -355,6 +366,8 @@ jobs:
 
       - name: Deploy to Railway
         if: steps.check-cooldown.outputs.deploy == 'true'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           cd services/graphql-gateway
           railway up --detach
@@ -428,6 +441,8 @@ jobs:
 
       - name: Deploy to Railway
         if: steps.check-cooldown.outputs.deploy == 'true'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           cd services/order-service
           railway up --detach
@@ -501,6 +516,8 @@ jobs:
 
       - name: Deploy to Railway
         if: steps.check-cooldown.outputs.deploy == 'true'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           cd services/product-service
           railway up --detach
