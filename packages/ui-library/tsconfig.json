@@ -8,11 +8,16 @@
     "moduleResolution": "bundler",
     "types": ["vite/client"]
   },
-  "include": ["src/**/*", "tests"],
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "dist",
+    "tests",
+    "src/tests",
+    "**/*.test.ts",
     "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
     "**/*.stories.ts",
     "**/*.stories.tsx",
     "src/stories"
