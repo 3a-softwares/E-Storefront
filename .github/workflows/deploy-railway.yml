@@ -118,8 +118,8 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Verify Railway Authentication
-        run: railway whoami
+      - name: Authenticate with Railway
+        run: echo ${{ secrets.RAILWAY_TOKEN }} | railway login
 
       - name: Link and Deploy to Railway
         working-directory: services/auth-service
@@ -146,8 +146,8 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Verify Railway Authentication
-        run: railway whoami
+      - name: Authenticate with Railway
+        run: echo ${{ secrets.RAILWAY_TOKEN }} | railway login
 
       - name: Link and Deploy to Railway
         working-directory: services/category-service
@@ -174,8 +174,8 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Verify Railway Authentication
-        run: railway whoami
+      - name: Authenticate with Railway
+        run: echo ${{ secrets.RAILWAY_TOKEN }} | railway login
 
       - name: Link and Deploy to Railway
         working-directory: services/coupon-service
@@ -202,8 +202,8 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Verify Railway Authentication
-        run: railway whoami
+      - name: Authenticate with Railway
+        run: echo ${{ secrets.RAILWAY_TOKEN }} | railway login
 
       - name: Link and Deploy to Railway
         working-directory: services/graphql-gateway
@@ -230,8 +230,8 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Verify Railway Authentication
-        run: railway whoami
+      - name: Authenticate with Railway
+        run: echo ${{ secrets.RAILWAY_TOKEN }} | railway login
 
       - name: Link and Deploy to Railway
         working-directory: services/order-service
@@ -258,8 +258,8 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Verify Railway Authentication
-        run: railway whoami
+      - name: Authenticate with Railway
+        run: echo ${{ secrets.RAILWAY_TOKEN }} | railway login
 
       - name: Link and Deploy to Railway
         working-directory: services/product-service
