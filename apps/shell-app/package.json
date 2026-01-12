@@ -1,7 +1,7 @@
 {
   "name": "@3asoftwares/shell-app",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Central launcher/dashboard for navigating to all other applications",
   "scripts": {
     "dev": "webpack serve --mode development --port 3000",

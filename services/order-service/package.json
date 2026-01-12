@@ -1,7 +1,7 @@
 {
   "name": "@3asoftwares/order-service",
   "license": "ISC",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Order and payment service with real-time updates",
   "main": "dist/index.js",
   "scripts": {

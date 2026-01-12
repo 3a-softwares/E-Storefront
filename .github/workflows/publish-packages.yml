@@ -1,18 +1,25 @@
 name: Publish Packages (NPM)
 
 on:
-  # Manual trigger only - requires CI to pass first
+  # Auto-trigger after CI success on main branch
+  workflow_run:
+    workflows: ['CI Pipeline']
+    types: [completed]
+    branches: [main]
+  # Manual trigger option
   workflow_dispatch:
     inputs:
       package:
-        description: 'Package to publish'
-        required: true
+        description: 'Package to publish (overrides change detection)'
+        required: false
         type: choice
         options:
+          - auto
           - all
           - types
           - utils
           - ui
+        default: 'auto'
       version_bump:
         description: 'Version bump type'
         required: true
@@ -34,6 +41,8 @@ concurrency:
 
 env:
   NODE_VERSION: '20'
+  # Default version bump for auto-trigger (workflow_run)
+  DEFAULT_VERSION_BUMP: 'patch'
 
 jobs:
   # ===========================================
@@ -42,30 +51,125 @@ jobs:
   verify-ci:
     name: Verify CI Passed
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    outputs:
+      proceed: ${{ steps.check.outputs.proceed }}
+    steps:
+      - name: CI Verification
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "## Manual Trigger" >> $GITHUB_STEP_SUMMARY
+            echo "proceed=true" >> $GITHUB_OUTPUT
+          else
+            echo "## CI Pipeline Passed" >> $GITHUB_STEP_SUMMARY
+            echo "proceed=true" >> $GITHUB_OUTPUT
+          fi
+          echo "Proceeding with package publish check..." >> $GITHUB_STEP_SUMMARY
+
+  # ===========================================
+  # DETECT CHANGES
+  # ===========================================
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    needs: verify-ci
+    if: needs.verify-ci.outputs.proceed == 'true'
+    outputs:
+      types-changed: ${{ steps.result.outputs.types }}
+      utils-changed: ${{ steps.result.outputs.utils }}
+      ui-changed: ${{ steps.result.outputs.ui }}
+      any-changed: ${{ steps.result.outputs.any }}
+      version-bump: ${{ steps.config.outputs.version-bump }}
+      dry-run: ${{ steps.config.outputs.dry-run }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 2
 
-      - name: Check Latest CI Status
+      - name: Detect File Changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            types:
+              - 'packages/types/src/**'
+              - 'packages/types/package.json'
+            utils:
+              - 'packages/utils/src/**'
+              - 'packages/utils/package.json'
+            ui:
+              - 'packages/ui-library/src/**'
+              - 'packages/ui-library/package.json'
+
+      - name: Set Configuration
+        id: config
         run: |
-          echo "Checking CI status for branch: ${{ github.ref_name }}"
-          
-          # Get the latest CI workflow run status
-          CI_STATUS=$(gh run list --workflow=ci.yml --branch=${{ github.ref_name }} --limit=1 --json conclusion --jq '.[0].conclusion')
-          
-          echo "Latest CI status: $CI_STATUS"
-          
-          if [ "$CI_STATUS" != "success" ]; then
-            echo "❌ CI Pipeline has not passed on this branch!"
-            echo "Please ensure CI passes before publishing."
-            echo "## ❌ CI Check Failed" >> $GITHUB_STEP_SUMMARY
-            echo "Latest CI status: $CI_STATUS" >> $GITHUB_STEP_SUMMARY
-            exit 1
+          # Version bump
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "version-bump=${{ inputs.version_bump }}" >> $GITHUB_OUTPUT
+            echo "dry-run=${{ inputs.dry_run }}" >> $GITHUB_OUTPUT
+          else
+            echo "version-bump=${{ env.DEFAULT_VERSION_BUMP }}" >> $GITHUB_OUTPUT
+            echo "dry-run=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: Determine Packages to Publish
+        id: result
+        run: |
+          PACKAGE="${{ inputs.package || 'auto' }}"
           
-          echo "✅ CI Pipeline passed!"
-          echo "## ✅ CI Check Passed" >> $GITHUB_STEP_SUMMARY
-        env:
-          GH_TOKEN: ${{ github.token }}
+          if [ "$PACKAGE" == "all" ]; then
+            echo "Publishing ALL packages (manual override)"
+            echo "types=true" >> $GITHUB_OUTPUT
+            echo "utils=true" >> $GITHUB_OUTPUT
+            echo "ui=true" >> $GITHUB_OUTPUT
+            echo "any=true" >> $GITHUB_OUTPUT
+          elif [ "$PACKAGE" == "types" ]; then
+            echo "Publishing TYPES only (manual override)"
+            echo "types=true" >> $GITHUB_OUTPUT
+            echo "utils=false" >> $GITHUB_OUTPUT
+            echo "ui=false" >> $GITHUB_OUTPUT
+            echo "any=true" >> $GITHUB_OUTPUT
+          elif [ "$PACKAGE" == "utils" ]; then
+            echo "Publishing UTILS only (manual override)"
+            echo "types=false" >> $GITHUB_OUTPUT
+            echo "utils=true" >> $GITHUB_OUTPUT
+            echo "ui=false" >> $GITHUB_OUTPUT
+            echo "any=true" >> $GITHUB_OUTPUT
+          elif [ "$PACKAGE" == "ui" ]; then
+            echo "Publishing UI only (manual override)"
+            echo "types=false" >> $GITHUB_OUTPUT
+            echo "utils=false" >> $GITHUB_OUTPUT
+            echo "ui=true" >> $GITHUB_OUTPUT
+            echo "any=true" >> $GITHUB_OUTPUT
+          else
+            # Auto-detect based on changes
+            echo "Using change detection..."
+            echo "types=${{ steps.filter.outputs.types }}" >> $GITHUB_OUTPUT
+            echo "utils=${{ steps.filter.outputs.utils }}" >> $GITHUB_OUTPUT
+            echo "ui=${{ steps.filter.outputs.ui }}" >> $GITHUB_OUTPUT
+            
+            if [ "${{ steps.filter.outputs.types }}" == "true" ] || [ "${{ steps.filter.outputs.utils }}" == "true" ] || [ "${{ steps.filter.outputs.ui }}" == "true" ]; then
+              echo "any=true" >> $GITHUB_OUTPUT
+            else
+              echo "any=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Show Detection Results
+        run: |
+          echo "## Package Change Detection" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Package | Changed | Will Publish |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|---------|--------------|" >> $GITHUB_STEP_SUMMARY
+          echo "| @3asoftwares/types | ${{ steps.filter.outputs.types }} | ${{ steps.result.outputs.types }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| @3asoftwares/utils | ${{ steps.filter.outputs.utils }} | ${{ steps.result.outputs.utils }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| @3asoftwares/ui | ${{ steps.filter.outputs.ui }} | ${{ steps.result.outputs.ui }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version Bump:** ${{ steps.config.outputs.version-bump }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Dry Run:** ${{ steps.config.outputs.dry-run }}" >> $GITHUB_STEP_SUMMARY
 
   # ===========================================
   # SETUP
@@ -73,32 +177,12 @@ jobs:
   setup:
     name: Setup
     runs-on: ubuntu-latest
-    needs: verify-ci
-    outputs:
-      publish-types: ${{ steps.determine.outputs.types }}
-      publish-utils: ${{ steps.determine.outputs.utils }}
-      publish-ui: ${{ steps.determine.outputs.ui }}
+    needs: detect-changes
+    if: needs.detect-changes.outputs.any-changed == 'true'
     steps:
       - uses: actions/checkout@v4
-
-      - name: Determine Packages to Publish
-        id: determine
-        run: |
-          PACKAGE="${{ inputs.package }}"
-          if [ "$PACKAGE" == "all" ]; then
-            echo "types=true" >> $GITHUB_OUTPUT
-            echo "utils=true" >> $GITHUB_OUTPUT
-            echo "ui=true" >> $GITHUB_OUTPUT
-          else
-            echo "types=$([[ '$PACKAGE' == 'types' ]] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
-            echo "utils=$([[ '$PACKAGE' == 'utils' ]] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
-            echo "ui=$([[ '$PACKAGE' == 'ui' ]] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
-          fi
-          
-          echo "## Publish Configuration" >> $GITHUB_STEP_SUMMARY
-          echo "- Package: $PACKAGE" >> $GITHUB_STEP_SUMMARY
-          echo "- Version Bump: ${{ inputs.version_bump }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Dry Run: ${{ inputs.dry_run }}" >> $GITHUB_STEP_SUMMARY
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -124,15 +208,18 @@ jobs:
   build:
     name: Build Packages
     runs-on: ubuntu-latest
-    needs: setup
+    needs: [detect-changes, setup]
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Restore node_modules
         uses: actions/cache/restore@v4
@@ -143,15 +230,12 @@ jobs:
           key: publish-node-modules-${{ github.sha }}
 
       - name: Build Types
-        if: needs.setup.outputs.publish-types == 'true'
         run: yarn build:types
 
       - name: Build Utils
-        if: needs.setup.outputs.publish-utils == 'true'
         run: yarn build:utils
 
       - name: Build UI
-        if: needs.setup.outputs.publish-ui == 'true'
         run: yarn build:ui
 
       - name: Cache build artifacts
@@ -169,10 +253,12 @@ jobs:
   publish-types:
     name: Publish @3asoftwares/types
     runs-on: ubuntu-latest
-    needs: [setup, build]
-    if: needs.setup.outputs.publish-types == 'true'
+    needs: [detect-changes, build]
+    if: needs.detect-changes.outputs.types-changed == 'true'
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -200,10 +286,10 @@ jobs:
 
       - name: Bump Version
         working-directory: packages/types
-        run: npm version ${{ inputs.version_bump }} --no-git-tag-version
+        run: npm version ${{ needs.detect-changes.outputs.version-bump }} --no-git-tag-version
 
       - name: Publish (Dry Run)
-        if: inputs.dry_run == true
+        if: needs.detect-changes.outputs.dry-run == 'true'
         working-directory: packages/types
         run: |
           echo "DRY RUN - Would publish @3asoftwares/types"
@@ -211,14 +297,14 @@ jobs:
           echo "### @3asoftwares/types - DRY RUN successful" >> $GITHUB_STEP_SUMMARY
 
       - name: Publish
-        if: inputs.dry_run != true
+        if: needs.detect-changes.outputs.dry-run != 'true'
         working-directory: packages/types
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Summary
-        if: inputs.dry_run != true
+        if: needs.detect-changes.outputs.dry-run != 'true'
         run: echo "### @3asoftwares/types published successfully" >> $GITHUB_STEP_SUMMARY
 
   # ===========================================
@@ -227,10 +313,12 @@ jobs:
   publish-utils:
     name: Publish @3asoftwares/utils
     runs-on: ubuntu-latest
-    needs: [setup, build, publish-types]
-    if: always() && needs.setup.outputs.publish-utils == 'true' && needs.build.result == 'success'
+    needs: [detect-changes, build, publish-types]
+    if: always() && needs.detect-changes.outputs.utils-changed == 'true' && needs.build.result == 'success'
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -258,10 +346,10 @@ jobs:
 
       - name: Bump Version
         working-directory: packages/utils
-        run: npm version ${{ inputs.version_bump }} --no-git-tag-version
+        run: npm version ${{ needs.detect-changes.outputs.version-bump }} --no-git-tag-version
 
       - name: Publish (Dry Run)
-        if: inputs.dry_run == true
+        if: needs.detect-changes.outputs.dry-run == 'true'
         working-directory: packages/utils
         run: |
           echo "DRY RUN - Would publish @3asoftwares/utils"
@@ -269,14 +357,14 @@ jobs:
           echo "### @3asoftwares/utils - DRY RUN successful" >> $GITHUB_STEP_SUMMARY
 
       - name: Publish
-        if: inputs.dry_run != true
+        if: needs.detect-changes.outputs.dry-run != 'true'
         working-directory: packages/utils
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Summary
-        if: inputs.dry_run != true
+        if: needs.detect-changes.outputs.dry-run != 'true'
         run: echo "### @3asoftwares/utils published successfully" >> $GITHUB_STEP_SUMMARY
 
   # ===========================================
@@ -285,10 +373,12 @@ jobs:
   publish-ui:
     name: Publish @3asoftwares/ui
     runs-on: ubuntu-latest
-    needs: [setup, build, publish-utils]
-    if: always() && needs.setup.outputs.publish-ui == 'true' && needs.build.result == 'success'
+    needs: [detect-changes, build, publish-utils]
+    if: always() && needs.detect-changes.outputs.ui-changed == 'true' && needs.build.result == 'success'
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -316,10 +406,10 @@ jobs:
 
       - name: Bump Version
         working-directory: packages/ui-library
-        run: npm version ${{ inputs.version_bump }} --no-git-tag-version
+        run: npm version ${{ needs.detect-changes.outputs.version-bump }} --no-git-tag-version
 
       - name: Publish (Dry Run)
-        if: inputs.dry_run == true
+        if: needs.detect-changes.outputs.dry-run == 'true'
         working-directory: packages/ui-library
         run: |
           echo "DRY RUN - Would publish @3asoftwares/ui"
@@ -327,15 +417,31 @@ jobs:
           echo "### @3asoftwares/ui - DRY RUN successful" >> $GITHUB_STEP_SUMMARY
 
       - name: Publish
-        if: inputs.dry_run != true
+        if: needs.detect-changes.outputs.dry-run != 'true'
         working-directory: packages/ui-library
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Summary
-        if: inputs.dry_run != true
+        if: needs.detect-changes.outputs.dry-run != 'true'
         run: echo "### @3asoftwares/ui published successfully" >> $GITHUB_STEP_SUMMARY
+
+  # ===========================================
+  # NO CHANGES - SKIP
+  # ===========================================
+  no-changes:
+    name: No Changes
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.any-changed != 'true'
+    steps:
+      - name: Skip Summary
+        run: |
+          echo "## No Package Changes Detected" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "No packages were modified in this commit." >> $GITHUB_STEP_SUMMARY
+          echo "NPM publish skipped." >> $GITHUB_STEP_SUMMARY
 
   # ===========================================
   # SUMMARY
@@ -343,29 +449,20 @@ jobs:
   summary:
     name: Publish Summary
     runs-on: ubuntu-latest
-    needs: [setup, build, publish-types, publish-utils, publish-ui]
+    needs: [detect-changes, build, publish-types, publish-utils, publish-ui, no-changes]
     if: always()
     steps:
       - name: Generate Summary
         run: |
           echo "## NPM Publish Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Package | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|---------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| @3asoftwares/types | ${{ needs.publish-types.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| @3asoftwares/utils | ${{ needs.publish-utils.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| @3asoftwares/ui | ${{ needs.publish-ui.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-      - name: Check for Failures
-        run: |
-          TYPES="${{ needs.publish-types.result }}"
-          UTILS="${{ needs.publish-utils.result }}"
-          UI="${{ needs.publish-ui.result }}"
           
-          if [ "$TYPES" == "failure" ] || [ "$UTILS" == "failure" ] || [ "$UI" == "failure" ]; then
-            echo "Some packages failed to publish" >> $GITHUB_STEP_SUMMARY
-            exit 1
+          if [ "${{ needs.detect-changes.outputs.any-changed }}" != "true" ]; then
+            echo "No packages were changed - publish skipped." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| Package | Status |" >> $GITHUB_STEP_SUMMARY
+            echo "|---------|--------|" >> $GITHUB_STEP_SUMMARY
+            echo "| @3asoftwares/types | ${{ needs.publish-types.result }} |" >> $GITHUB_STEP_SUMMARY
+            echo "| @3asoftwares/utils | ${{ needs.publish-utils.result }} |" >> $GITHUB_STEP_SUMMARY
+            echo "| @3asoftwares/ui | ${{ needs.publish-ui.result }} |" >> $GITHUB_STEP_SUMMARY
           fi
-          
-          echo "All requested packages published successfully" >> $GITHUB_STEP_SUMMARY

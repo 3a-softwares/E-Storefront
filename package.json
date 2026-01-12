@@ -1,6 +1,6 @@
 {
   "name": "ecommerce-platform",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Enterprise 3A Softwares with multiple independent applications",
   "workspaces": [

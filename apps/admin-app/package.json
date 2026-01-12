@@ -1,7 +1,7 @@
 {
   "name": "@3asoftwares/admin-app",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Admin dashboard for platform management - users, orders, products, analytics",
   "scripts": {
     "dev": "vite --port 3001 --host",

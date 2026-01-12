@@ -1,7 +1,7 @@
 {
   "name": "@3asoftwares/seller-app",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Seller portal for product management, inventory, and order fulfillment",
   "scripts": {
     "dev": "vite --port 3002 --host",
