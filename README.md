@@ -267,7 +267,7 @@ yarn test:coverage:backend
 ## 📚 Documentation
 
 - Each project has its own README.md with detailed documentation
-- Storybook for UI components: `yarn dev:storybook`
+- Storybook for UI components: `yarn dev:ui`
 - Swagger API docs: Available at `/api-docs` on each service
 
 ## 🔗 Port Reference

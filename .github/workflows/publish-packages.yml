@@ -460,9 +460,34 @@ jobs:
           if [ "${{ needs.detect-changes.outputs.any-changed }}" != "true" ]; then
             echo "No packages were changed - publish skipped." >> $GITHUB_STEP_SUMMARY
           else
+            PUBLISHED=false
+            
             echo "| Package | Status |" >> $GITHUB_STEP_SUMMARY
             echo "|---------|--------|" >> $GITHUB_STEP_SUMMARY
-            echo "| @3asoftwares/types | ${{ needs.publish-types.result }} |" >> $GITHUB_STEP_SUMMARY
-            echo "| @3asoftwares/utils | ${{ needs.publish-utils.result }} |" >> $GITHUB_STEP_SUMMARY
-            echo "| @3asoftwares/ui | ${{ needs.publish-ui.result }} |" >> $GITHUB_STEP_SUMMARY
+            
+            if [ "${{ needs.publish-types.result }}" == "success" ]; then
+              echo "| @3asoftwares/types | published |" >> $GITHUB_STEP_SUMMARY
+              PUBLISHED=true
+            elif [ "${{ needs.publish-types.result }}" == "failure" ]; then
+              echo "| @3asoftwares/types | failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.publish-utils.result }}" == "success" ]; then
+              echo "| @3asoftwares/utils | published |" >> $GITHUB_STEP_SUMMARY
+              PUBLISHED=true
+            elif [ "${{ needs.publish-utils.result }}" == "failure" ]; then
+              echo "| @3asoftwares/utils | failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.publish-ui.result }}" == "success" ]; then
+              echo "| @3asoftwares/ui | published |" >> $GITHUB_STEP_SUMMARY
+              PUBLISHED=true
+            elif [ "${{ needs.publish-ui.result }}" == "failure" ]; then
+              echo "| @3asoftwares/ui | failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "$PUBLISHED" != "true" ]; then
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "No packages were published (no source changes detected)." >> $GITHUB_STEP_SUMMARY
+            fi
           fi

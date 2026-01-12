@@ -109,7 +109,7 @@ Deploy each app separately:
 3. Configure:
    - **Root Directory**: `apps/admin-app`
    - **Framework Preset**: Vite
-   - **Build Command**: `cd ../.. && yarn install && yarn build:types && yarn build:utils && yarn build:storybook && cd apps/admin-app && yarn build`
+   - **Build Command**: `cd ../.. && yarn install && yarn build:types && yarn build:utils && yarn build:ui && cd apps/admin-app && yarn build`
    - **Output Directory**: `dist`
 4. Add Environment Variables:
    ```

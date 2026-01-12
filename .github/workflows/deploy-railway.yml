@@ -265,17 +265,61 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           
           if [ "${{ needs.verify-ci.outputs.should-deploy }}" != "true" ]; then
-            echo "### Railway Deployments Skipped" >> $GITHUB_STEP_SUMMARY
+            echo "### Railway Deployments Disabled" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "Railway deployments are currently disabled." >> $GITHUB_STEP_SUMMARY
             echo "To enable, set \`RAILWAY_ENABLED: 'true'\` in the workflow file." >> $GITHUB_STEP_SUMMARY
           else
+            DEPLOYED=false
+            
             echo "| Service | Status |" >> $GITHUB_STEP_SUMMARY
             echo "|---------|--------|" >> $GITHUB_STEP_SUMMARY
-            echo "| Auth | ${{ needs.deploy-auth.result }} |" >> $GITHUB_STEP_SUMMARY
-            echo "| Category | ${{ needs.deploy-category.result }} |" >> $GITHUB_STEP_SUMMARY
-            echo "| Coupon | ${{ needs.deploy-coupon.result }} |" >> $GITHUB_STEP_SUMMARY
-            echo "| Gateway | ${{ needs.deploy-gateway.result }} |" >> $GITHUB_STEP_SUMMARY
-            echo "| Order | ${{ needs.deploy-order.result }} |" >> $GITHUB_STEP_SUMMARY
-            echo "| Product | ${{ needs.deploy-product.result }} |" >> $GITHUB_STEP_SUMMARY
+            
+            if [ "${{ needs.deploy-auth.result }}" == "success" ]; then
+              echo "| Auth | deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-auth.result }}" == "failure" ]; then
+              echo "| Auth | failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-category.result }}" == "success" ]; then
+              echo "| Category | deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-category.result }}" == "failure" ]; then
+              echo "| Category | failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-coupon.result }}" == "success" ]; then
+              echo "| Coupon | deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-coupon.result }}" == "failure" ]; then
+              echo "| Coupon | failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-gateway.result }}" == "success" ]; then
+              echo "| Gateway | deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-gateway.result }}" == "failure" ]; then
+              echo "| Gateway | failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-order.result }}" == "success" ]; then
+              echo "| Order | deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-order.result }}" == "failure" ]; then
+              echo "| Order | failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-product.result }}" == "success" ]; then
+              echo "| Product | deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-product.result }}" == "failure" ]; then
+              echo "| Product | failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "$DEPLOYED" != "true" ]; then
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "No services were deployed (no changes detected)." >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
           fi

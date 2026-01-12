@@ -15,7 +15,7 @@
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "prettier",
-    "plugin:storybook/recommended"
+    "plugin:ui/recommended"
   ],
   "plugins": [
     "@typescript-eslint",
