@@ -322,4 +322,3 @@ jobs:
               echo "No services were deployed (no changes detected)." >> $GITHUB_STEP_SUMMARY
             fi
           fi
-          fi
