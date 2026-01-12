@@ -61,9 +61,6 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "dependencies": {
-    "@3asoftwares/types": "^1.0.3"
-  },
   "peerDependencies": {
     "express": "^4.18.2",
     "express-validator": "^7.0.1"
@@ -76,11 +73,14 @@
       "optional": true
     }
   },
+  "dependencies": {
+    "@3asoftwares/types": "^1.0.3",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
   "devDependencies": {
     "@types/node": "^25.0.3",
     "@vitest/coverage-v8": "^4.0.16",
-    "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
     "vitest": "^4.0.16"
   }
 }
