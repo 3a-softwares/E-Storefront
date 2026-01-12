@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Build shared packages
+        run: |
+          yarn workspace @3asoftwares/types run build
+          yarn workspace @3asoftwares/utils run build
+          yarn workspace @3asoftwares/ui run build
+
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
