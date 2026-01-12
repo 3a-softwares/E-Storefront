@@ -47,9 +47,9 @@
     "src/config"
   ],
   "scripts": {
-    "build": "yarn tsup",
-    "build:backend": "npx tsup --config tsup.backend.config.ts",
-    "build:full": "npx tsup",
+    "build": "tsup",
+    "build:backend": "tsup --config tsup.backend.config.ts",
+    "build:full": "tsup",
     "prepublishOnly": "npm run build",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
