@@ -1,14 +1,10 @@
 name: CI Pipeline
 
-# TEMPORARILY DISABLED - uncomment 'on' section to re-enable
-# on:
-#   push:
-#     branches: ['**']
-#   pull_request:
-#     branches: [main, develop]
-
 on:
-  workflow_dispatch:  # Only manual trigger for now
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main, develop]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

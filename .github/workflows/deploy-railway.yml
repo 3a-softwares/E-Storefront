@@ -1,8 +1,9 @@
 name: Deploy Backend (Railway)
 
 on:
-  workflow_dispatch:  # Manual trigger only
-  push:
+  workflow_run:
+    workflows: ['CI Pipeline']
+    types: [completed]
     branches: [main]
 
 concurrency:
@@ -14,20 +15,106 @@ env:
   RAILWAY_ENABLED: 'true'
 
 # ============================================================
-# TEMPORARY: Only Auth Service deployment for testing
+# IMPORTANT: Disable Railway Git-based Auto-Deploy
+# ============================================================
+# To ensure deployments ONLY happen via GitHub Actions:
+#
+# 1. Go to Railway Dashboard (railway.app)
+# 2. Select your project
+# 3. For EACH service (auth, category, coupon, gateway, order, product, ticket):
+#    - Click on the service
+#    - Go to Settings tab
+#    - Under "Source" section, disable "Automatic Deployments"
+#    - Or disconnect the GitHub repo if connected directly
+#
+# This ensures Railway only deploys when triggered by this workflow.
 # ============================================================
 
 jobs:
+  # ===========================================
+  # VERIFY CI PASSED
+  # ===========================================
+  verify-ci:
+    name: Verify CI Passed
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    outputs:
+      should-deploy: ${{ steps.check.outputs.should-deploy }}
+    steps:
+      - name: CI Verification
+        id: check
+        run: |
+          echo "## CI Pipeline Passed" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ env.RAILWAY_ENABLED }}" == "true" ]; then
+            echo "Railway deployments are ENABLED" >> $GITHUB_STEP_SUMMARY
+            echo "should-deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "Railway deployments are DISABLED (skipped)" >> $GITHUB_STEP_SUMMARY
+            echo "To enable, set RAILWAY_ENABLED to 'true' in the workflow" >> $GITHUB_STEP_SUMMARY
+            echo "should-deploy=false" >> $GITHUB_OUTPUT
+          fi
+
+  # ===========================================
+  # DETECT CHANGES
+  # ===========================================
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    needs: verify-ci
+    outputs:
+      services-auth: ${{ steps.filter.outputs.services-auth }}
+      services-category: ${{ steps.filter.outputs.services-category }}
+      services-coupon: ${{ steps.filter.outputs.services-coupon }}
+      services-gateway: ${{ steps.filter.outputs.services-gateway }}
+      services-order: ${{ steps.filter.outputs.services-order }}
+      services-product: ${{ steps.filter.outputs.services-product }}
+      services-ticket: ${{ steps.filter.outputs.services-ticket }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 2
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            services-auth:
+              - 'services/auth-service/**'
+              - 'packages/**'
+            services-category:
+              - 'services/category-service/**'
+              - 'packages/**'
+            services-coupon:
+              - 'services/coupon-service/**'
+              - 'packages/**'
+            services-gateway:
+              - 'services/graphql-gateway/**'
+              - 'packages/**'
+            services-order:
+              - 'services/order-service/**'
+              - 'packages/**'
+            services-product:
+              - 'services/product-service/**'
+              - 'packages/**'
+            services-ticket:
+              - 'services/ticket-service/**'
+              - 'packages/**'
+
   # ===========================================
   # DEPLOY AUTH SERVICE
   # ===========================================
   deploy-auth:
     name: Deploy Auth Service
     runs-on: ubuntu-latest
+    needs: detect-changes
     env:
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli@latest
@@ -48,36 +135,273 @@ jobs:
           echo "### Auth Service Deployed" >> $GITHUB_STEP_SUMMARY
 
   # ===========================================
+  # DEPLOY CATEGORY SERVICE
+  # ===========================================
+  deploy-category:
+    name: Deploy Category Service
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli@latest
+
+      - name: Verify Railway Token
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "::error::RAILWAY_TOKEN secret is not set"
+            exit 1
+          fi
+          echo "Railway token is configured"
+
+      - name: Deploy to Railway
+        working-directory: services/category-service
+        run: |
+          railway link --project ${{ secrets.RAILWAY_PROJECT_ID }} --environment production
+          railway up --service ${{ secrets.RAILWAY_SERVICE_CATEGORY }} --detach
+          echo "### Category Service Deployed" >> $GITHUB_STEP_SUMMARY
+
+  # ===========================================
+  # DEPLOY COUPON SERVICE
+  # ===========================================
+  deploy-coupon:
+    name: Deploy Coupon Service
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli@latest
+
+      - name: Verify Railway Token
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "::error::RAILWAY_TOKEN secret is not set"
+            exit 1
+          fi
+          echo "Railway token is configured"
+
+      - name: Deploy to Railway
+        working-directory: services/coupon-service
+        run: |
+          railway link --project ${{ secrets.RAILWAY_PROJECT_ID }} --environment production
+          railway up --service ${{ secrets.RAILWAY_SERVICE_COUPON }} --detach
+          echo "### Coupon Service Deployed" >> $GITHUB_STEP_SUMMARY
+
+  # ===========================================
+  # DEPLOY GRAPHQL GATEWAY
+  # ===========================================
+  deploy-gateway:
+    name: Deploy GraphQL Gateway
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli@latest
+
+      - name: Verify Railway Token
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "::error::RAILWAY_TOKEN secret is not set"
+            exit 1
+          fi
+          echo "Railway token is configured"
+
+      - name: Deploy to Railway
+        working-directory: services/graphql-gateway
+        run: |
+          railway link --project ${{ secrets.RAILWAY_PROJECT_ID }} --environment production
+          railway up --service ${{ secrets.RAILWAY_SERVICE_GRAPHQL }} --detach
+          echo "### GraphQL Gateway Deployed" >> $GITHUB_STEP_SUMMARY
+
+  # ===========================================
+  # DEPLOY ORDER SERVICE
+  # ===========================================
+  deploy-order:
+    name: Deploy Order Service
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli@latest
+
+      - name: Verify Railway Token
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "::error::RAILWAY_TOKEN secret is not set"
+            exit 1
+          fi
+          echo "Railway token is configured"
+
+      - name: Deploy to Railway
+        working-directory: services/order-service
+        run: |
+          railway link --project ${{ secrets.RAILWAY_PROJECT_ID }} --environment production
+          railway up --service ${{ secrets.RAILWAY_SERVICE_ORDER }} --detach
+          echo "### Order Service Deployed" >> $GITHUB_STEP_SUMMARY
+
+  # ===========================================
+  # DEPLOY PRODUCT SERVICE
+  # ===========================================
+  deploy-product:
+    name: Deploy Product Service
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli@latest
+
+      - name: Verify Railway Token
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "::error::RAILWAY_TOKEN secret is not set"
+            exit 1
+          fi
+          echo "Railway token is configured"
+
+      - name: Deploy to Railway
+        working-directory: services/product-service
+        run: |
+          railway link --project ${{ secrets.RAILWAY_PROJECT_ID }} --environment production
+          railway up --service ${{ secrets.RAILWAY_SERVICE_PRODUCT }} --detach
+          echo "### Product Service Deployed" >> $GITHUB_STEP_SUMMARY
+
+  # ===========================================
+  # DEPLOY TICKET SERVICE
+  # ===========================================
+  deploy-ticket:
+    name: Deploy Ticket Service
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli@latest
+
+      - name: Verify Railway Token
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "::error::RAILWAY_TOKEN secret is not set"
+            exit 1
+          fi
+          echo "Railway token is configured"
+
+      - name: Deploy to Railway
+        working-directory: services/ticket-service
+        run: |
+          railway link --project ${{ secrets.RAILWAY_PROJECT_ID }} --environment production
+          railway up --service ${{ secrets.RAILWAY_SERVICE_TICKET }} --detach
+          echo "### Ticket Service Deployed" >> $GITHUB_STEP_SUMMARY
+
+  # ===========================================
   # DEPLOYMENT SUMMARY
   # ===========================================
   summary:
     name: Deployment Summary
     runs-on: ubuntu-latest
-    needs: [deploy-auth]
+    needs: [verify-ci, detect-changes, deploy-auth, deploy-category, deploy-coupon, deploy-gateway, deploy-order, deploy-product, deploy-ticket]
     if: always()
     steps:
       - name: Generate Summary
         run: |
           echo "## Railway Deployment Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Service | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|---------|--------|" >> $GITHUB_STEP_SUMMARY
           
-          if [ "${{ needs.deploy-auth.result }}" == "success" ]; then
-            echo "| Auth | ✅ deployed |" >> $GITHUB_STEP_SUMMARY
-          elif [ "${{ needs.deploy-auth.result }}" == "failure" ]; then
-            echo "| Auth | ❌ failed |" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.verify-ci.outputs.should-deploy }}" != "true" ]; then
+            echo "### Railway Deployments Disabled" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Railway deployments are currently disabled." >> $GITHUB_STEP_SUMMARY
+            echo "To enable, set \`RAILWAY_ENABLED: 'true'\` in the workflow file." >> $GITHUB_STEP_SUMMARY
           else
-            echo "| Auth | ⏭️ skipped |" >> $GITHUB_STEP_SUMMARY
+            DEPLOYED=false
+            
+            echo "| Service | Status |" >> $GITHUB_STEP_SUMMARY
+            echo "|---------|--------|" >> $GITHUB_STEP_SUMMARY
+            
+            if [ "${{ needs.deploy-auth.result }}" == "success" ]; then
+              echo "| Auth | ✅ deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-auth.result }}" == "failure" ]; then
+              echo "| Auth | ❌ failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-category.result }}" == "success" ]; then
+              echo "| Category | ✅ deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-category.result }}" == "failure" ]; then
+              echo "| Category | ❌ failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-coupon.result }}" == "success" ]; then
+              echo "| Coupon | ✅ deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-coupon.result }}" == "failure" ]; then
+              echo "| Coupon | ❌ failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-gateway.result }}" == "success" ]; then
+              echo "| Gateway | ✅ deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-gateway.result }}" == "failure" ]; then
+              echo "| Gateway | ❌ failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-order.result }}" == "success" ]; then
+              echo "| Order | ✅ deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-order.result }}" == "failure" ]; then
+              echo "| Order | ❌ failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-product.result }}" == "success" ]; then
+              echo "| Product | ✅ deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-product.result }}" == "failure" ]; then
+              echo "| Product | ❌ failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "${{ needs.deploy-ticket.result }}" == "success" ]; then
+              echo "| Ticket | ✅ deployed |" >> $GITHUB_STEP_SUMMARY
+              DEPLOYED=true
+            elif [ "${{ needs.deploy-ticket.result }}" == "failure" ]; then
+              echo "| Ticket | ❌ failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "$DEPLOYED" != "true" ]; then
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "No services were deployed (no changes detected)." >> $GITHUB_STEP_SUMMARY
+            fi
           fi
-
-# ============================================================
-# COMMENTED OUT FOR TESTING - REVERT AFTER AUTH WORKS
-# ============================================================
-# deploy-category:
-# deploy-coupon:
-# deploy-gateway:
-# deploy-order:
-# deploy-product:
-# deploy-ticket:
-# ============================================================
