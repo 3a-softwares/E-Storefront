@@ -1,7 +1,7 @@
 {
   "name": "@3asoftwares/auth-service",
   "license": "MIT",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "private": true,
   "description": "Authentication service with JWT and role-based access control",
   "main": "dist/index.js",

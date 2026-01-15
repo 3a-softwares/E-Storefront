@@ -54,52 +54,37 @@ jobs:
               - 'packages/**'
             frontend:
               - 'apps/**'
-              - 'packages/**'
             backend:
               - 'services/**'
-              - 'packages/**'
             # Granular package changes
             types:
               - 'packages/types/**'
             utils:
               - 'packages/utils/**'
-              - 'packages/types/**'
             ui:
               - 'packages/ui-library/**'
-              - 'packages/types/**'
-              - 'packages/utils/**'
-            # Granular frontend changes
+            # Granular frontend changes (only direct changes)
             admin-app:
               - 'apps/admin-app/**'
-              - 'packages/**'
             seller-app:
               - 'apps/seller-app/**'
-              - 'packages/**'
             shell-app:
               - 'apps/shell-app/**'
-              - 'packages/**'
-            # Granular backend changes
+            # Granular backend changes (only direct changes)
             auth-service:
               - 'services/auth-service/**'
-              - 'packages/**'
             category-service:
               - 'services/category-service/**'
-              - 'packages/**'
             coupon-service:
               - 'services/coupon-service/**'
-              - 'packages/**'
             gateway-service:
               - 'services/graphql-gateway/**'
-              - 'packages/**'
             order-service:
               - 'services/order-service/**'
-              - 'packages/**'
             product-service:
               - 'services/product-service/**'
-              - 'packages/**'
             ticket-service:
               - 'services/ticket-service/**'
-              - 'packages/**'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

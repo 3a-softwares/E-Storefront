@@ -82,25 +82,18 @@ jobs:
           filters: |
             services-auth:
               - 'services/auth-service/**'
-              - 'packages/**'
             services-category:
               - 'services/category-service/**'
-              - 'packages/**'
             services-coupon:
               - 'services/coupon-service/**'
-              - 'packages/**'
             services-gateway:
               - 'services/graphql-gateway/**'
-              - 'packages/**'
             services-order:
               - 'services/order-service/**'
-              - 'packages/**'
             services-product:
               - 'services/product-service/**'
-              - 'packages/**'
             services-ticket:
               - 'services/ticket-service/**'
-              - 'packages/**'
 
   # ===========================================
   # DEPLOY AUTH SERVICE
