@@ -21,7 +21,7 @@ concurrency:
 env:
   NODE_VERSION: '20'
   # Static credentials for auth service deployment
-  RAILWAY_TOKEN: '9b2110c7-b161-45f3-8bf8-67a4a29f90f1'
+  RAILWAY_TOKEN: '7b4cfc07-e330-4f76-a200-a8bb4b30e213'
   RAILWAY_PROJECT_ID: '04f49d30-1baf-423a-9e6d-76ac8a867b93'
   RAILWAY_SERVICE_AUTH: '1e3a3dd6-ac2c-4e63-a224-419dcb69770e'
 
