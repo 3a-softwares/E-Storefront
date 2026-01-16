@@ -1,8 +1,7 @@
 {
   "git": {
-    "deploymentEnabled": false
+    "deploymentEnabled": true
   },
-  "buildCache": false,
   "installCommand": "cd ../.. && yarn install",
   "buildCommand": "cd ../.. && yarn build:packages && yarn workspace @3asoftwares/shell-app build",
   "outputDirectory": "dist",
