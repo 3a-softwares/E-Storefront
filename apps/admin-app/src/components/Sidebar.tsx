@@ -113,7 +113,7 @@ export const Sidebar: React.FC = () => {
         aria-hidden="true"
       />
       <aside
-        id={process.env.REACT_APP_SUPPORT_APP_URL}
+        id={'env-' + process.env.REACT_APP_SUPPORT_APP_URL}
         className={`
           fixed top-0 lg:top-[72px] left-0 z-40 h-screen lg:h-[calc(100vh-72px)] bg-white dark:bg-gray-900 
           border-r border-gray-200 dark:border-gray-800 

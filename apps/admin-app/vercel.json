@@ -1,6 +1,6 @@
 {
   "git": {
-    "deploymentEnabled": false
+    "deploymentEnabled": true
   },
   "installCommand": "cd ../.. && yarn install",
   "buildCommand": "cd ../.. && yarn build:types && yarn build:utils && yarn build:ui && yarn build:admin",
