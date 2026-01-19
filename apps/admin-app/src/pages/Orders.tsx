@@ -160,14 +160,14 @@ export const Orders: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="ml-12 lg:ml-0 text-3xl font-bold text-gray-900 dark:text-white">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
           Order Management
         </h1>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         <Select
           value={statusFilter}
           onChange={setStatusFilter}
@@ -180,12 +180,14 @@ export const Orders: React.FC = () => {
             { value: 'delivered', label: 'Delivered' },
             { value: 'cancelled', label: 'Cancelled' },
           ]}
-          className="w-48"
+          className="w-full sm:w-48"
         />
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-        <Table data={filteredOrders} columns={columns} />
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-x-auto">
+        <div className="min-w-[800px]">
+          <Table data={filteredOrders} columns={columns} />
+        </div>
       </div>
 
       {data?.orders.pagination && (
@@ -204,13 +206,13 @@ export const Orders: React.FC = () => {
         onClose={() => setIsDetailModalOpen(false)}
       >
         {orderDetail && orderDetail.order ? (
-          <div className="space-y-6">
-            <div className="flex justify-between items-start">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-4">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">
                   Order #{orderDetail.order.orderNumber || orderDetail.order.id.substring(0, 8)}
                 </h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
                   {new Date(orderDetail.order.createdAt).toLocaleString()}
                 </p>
               </div>

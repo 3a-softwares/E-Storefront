@@ -71,10 +71,10 @@ export const Radio: React.FC<RadioProps> = ({
               <label
                 key={option.value}
                 className={`
-                  flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all
+                  flex items-center p-3 sm:p-4 border-2 rounded-lg cursor-pointer transition-all touch-manipulation
                   ${isChecked ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:bg-gray-50'}
                   ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
-                  ${orientation === 'horizontal' ? 'flex-1 min-w-[200px]' : 'w-full'}
+                  ${orientation === 'horizontal' ? 'flex-1 min-w-[150px] sm:min-w-[200px]' : 'w-full'}
                 `}
               >
                 <input

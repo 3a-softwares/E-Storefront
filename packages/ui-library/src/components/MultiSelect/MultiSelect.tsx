@@ -30,9 +30,9 @@ const variantClasses = {
 };
 
 const sizeClasses = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-base',
-  lg: 'px-5 py-3 text-lg',
+  sm: 'px-2 sm:px-3 py-1.5 text-xs sm:text-sm',
+  md: 'px-3 sm:px-4 py-2 text-sm sm:text-base',
+  lg: 'px-4 sm:px-5 py-2.5 sm:py-3 text-base sm:text-lg',
 };
 
 export const MultiSelect: React.FC<MultiSelectProps> = ({
@@ -79,7 +79,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
     <div className={`relative ${className}`}>
       <div
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={`rounded-lg transition-all duration-200 outline-none ${variantClasses[variant]} ${sizeClasses[size]} ${errorClasses} ${disabledClasses} flex flex-wrap gap-2 items-center min-h-[40px]`}
+        className={`rounded-lg transition-all duration-200 outline-none ${variantClasses[variant]} ${sizeClasses[size]} ${errorClasses} ${disabledClasses} flex flex-wrap gap-1.5 sm:gap-2 items-center min-h-[44px] sm:min-h-[40px] touch-manipulation`}
       >
         {value.length === 0 ? (
           <span className="text-gray-500 font-medium">{placeholder}</span>

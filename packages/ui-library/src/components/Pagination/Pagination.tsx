@@ -50,13 +50,14 @@ export const Pagination: React.FC<PaginationProps> = ({
   if (totalPages <= 1) return null;
 
   return (
-    <div className={`flex items-center justify-center gap-2 ${className}`}>
+    <div className={`flex flex-wrap items-center justify-center gap-1 sm:gap-2 ${className}`}>
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-4 py-2 border-2 border-gray-300 rounded-lg font-semibold text-gray-900 hover:bg-gray-100 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        className="px-2 sm:px-4 py-1.5 sm:py-2 border-2 border-gray-300 rounded-lg font-semibold text-xs sm:text-sm text-gray-900 hover:bg-gray-100 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation"
       >
-        Previous
+        <span className="hidden sm:inline">Previous</span>
+        <span className="sm:hidden">←</span>
       </button>
 
       {getPageNumbers().map((page, index) => {
@@ -86,9 +87,10 @@ export const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-4 py-2 border-2 border-gray-300 rounded-lg font-semibold text-gray-900 hover:bg-gray-100 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        className="px-2 sm:px-4 py-1.5 sm:py-2 border-2 border-gray-300 rounded-lg font-semibold text-xs sm:text-sm text-gray-900 hover:bg-gray-100 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation"
       >
-        Next
+        <span className="hidden sm:inline">Next</span>
+        <span className="sm:hidden">→</span>
       </button>
     </div>
   );

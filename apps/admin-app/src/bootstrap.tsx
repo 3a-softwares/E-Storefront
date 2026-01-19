@@ -22,8 +22,11 @@ const queryClient = new QueryClient({
   },
 });
 
-// Initialize theme from localStorage
+// Initialize theme from localStorage - default to light
 const initTheme = () => {
+  // Remove dark class first to ensure light is default
+  document.documentElement.classList.remove('dark');
+
   const savedTheme = localStorage.getItem('admin-ui-store');
   if (savedTheme) {
     try {

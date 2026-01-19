@@ -103,13 +103,11 @@ export function useTokenValidator(onUserUpdate?: (user: any) => void) {
     
     // Debounce: Skip if we validated recently
     if (now - lastValidationRef.current < MIN_VALIDATION_INTERVAL) {
-      console.log('[TokenValidator] Skipping validation - too soon since last check');
       return;
     }
-    
+
     // Prevent concurrent validations
     if (isValidatingRef.current) {
-      console.log('[TokenValidator] Skipping validation - already in progress');
       return;
     }
     

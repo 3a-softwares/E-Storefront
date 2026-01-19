@@ -179,7 +179,7 @@ export const Users: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {toast.show && (
         <ToasterBox
           message={toast.message}
@@ -188,39 +188,39 @@ export const Users: React.FC = () => {
         />
       )}
       <div className="flex justify-between items-center">
-        <h1 className="ml-12 lg:ml-0 text-3xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
           User & Role Management
         </h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Total Users</h3>
-          <p className="ml-12 lg:ml-0 text-3xl font-bold text-gray-900 dark:text-white">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-3 sm:p-4 lg:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-1 sm:mb-2">Total Users</h3>
+          <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
             {data?.users.pagination.total || 0}
           </p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Admins</h3>
-          <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-3 sm:p-4 lg:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-1 sm:mb-2">Admins</h3>
+          <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-600 dark:text-blue-400">
             {data?.users.pagination.adminCount || 0}
           </p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Sellers</h3>
-          <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-3 sm:p-4 lg:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-1 sm:mb-2">Sellers</h3>
+          <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-600 dark:text-green-400">
             {data?.users.pagination.sellerCount || 0}
           </p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Customers</h3>
-          <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-3 sm:p-4 lg:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-1 sm:mb-2">Customers</h3>
+          <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-yellow-600 dark:text-yellow-400">
             {data?.users.pagination.customerCount || 0}
           </p>
         </div>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         <Input
           placeholder="Search by name or email..."
           value={searchTerm}
@@ -236,11 +236,11 @@ export const Users: React.FC = () => {
             { value: 'seller', label: 'Seller' },
             { value: 'customer', label: 'Customer' },
           ]}
-          className="w-48"
+          className="w-full sm:w-48"
         />
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-x-auto">
         <Table data={users} columns={columns} />
       </div>
 

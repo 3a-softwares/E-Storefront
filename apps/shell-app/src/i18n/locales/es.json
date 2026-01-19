@@ -89,6 +89,16 @@
         "orderTracking": "Seguimiento de pedidos"
       },
       "button": "Abrir Tienda"
+    },
+    "supportPortal": {
+      "title": "Portal de Soporte",
+      "description": "Centro de soporte dedicado para consultas de clientes, gestión de tickets y asistencia en vivo.",
+      "features": {
+        "ticketManagement": "Sistema de gestión de tickets",
+        "liveChat": "Soporte de chat en vivo",
+        "knowledgeBase": "Acceso a base de conocimientos"
+      },
+      "button": "Abrir Portal de Soporte"
     }
   },
   "cta": {

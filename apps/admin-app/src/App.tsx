@@ -25,10 +25,6 @@ import { getUserById } from './api/client';
 import { useAppDispatch } from './store/store';
 import { useTokenValidator } from './store/useTokenValidator';
 
-console.log('Admin App - VITE_ENV:', process.env.VITE_ENV);
-console.log('Admin App - VITE_SHELL_APP_URL:', process.env.VITE_SHELL_APP_URL);
-console.log('Admin App - VITE_SUPPORT_APP_URL:', process.env.VITE_SUPPORT_APP_URL);
-
 const AppContent: React.FC = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();

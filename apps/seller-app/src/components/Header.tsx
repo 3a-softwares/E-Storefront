@@ -6,7 +6,6 @@ export const Header: React.FC = () => {
   const { user, clearAuth } = useSellerAuthStore();
 
   const handleLogout = () => {
-    // clearAuth from store handles cookie cleanup and redirect
     clearAuth();
   };
 

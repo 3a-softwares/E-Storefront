@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { getAccessToken } from '@3asoftwares/utils/client';
 
-console.log('Auth Service URL:', process.env.AUTH_SERVICE_BASE);
 const API_BASE = process.env.AUTH_SERVICE_BASE || 'http://localhost:3011/api/auth';
 
 // Create authenticated client

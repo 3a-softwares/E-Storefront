@@ -1,14 +1,13 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { clearAuth, getCurrentUser } from '@3asoftwares/utils/client';
-import { Modal, Header, ToasterBox } from '@3asoftwares/ui';
+import { Modal, ToasterBox } from '@3asoftwares/ui';
 import { useUIStore } from './store/uiStore';
 import { useTokenValidator } from './store/useTokenValidator';
 import { changeTheme, renderApp, MFE_CONFIG, ActiveApp } from './utils';
 import { I18nProvider, useTranslation } from './i18n/I18nContext';
 import { LanguageSelector } from './components/LanguageSelector';
 import { IframeContainer } from './components/IframeContainer';
-
-console.log('Shell App - NODE_ENV:', process.env.NODE_ENV);
+import { Header } from './components/Header';
 
 const Footer = React.lazy(() =>
   import('./components/Footer').then((m) => ({ default: (m as any).Footer ?? (m as any).default }))
@@ -20,6 +19,7 @@ const WelcomePage = React.lazy(() =>
 ) as React.LazyExoticComponent<
   React.ComponentType<{
     onSignupClick: () => void;
+    onLoginClick: () => void;
   }>
 >;
 const AuthForm = React.lazy(() =>
@@ -131,21 +131,13 @@ const AppContent: React.FC = () => {
         />
       )}
 
-      {/* Main Shell UI - hidden when embedded app is active */}
       {!activeApp && (
         <>
-          <div className="flex items-center justify-end px-4 py-2 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-            <LanguageSelector compact />
-          </div>
           <Header
-            user={user}
-            onLogin={login}
-            onLogout={handleLogout}
-            onCreateAccount={signup}
-            theme={theme}
-            onToggleTheme={toggleTheme}
-            showThemeToggle={true}
-            showLanguageSelector={false}
+            onLoginClick={login}
+            onSignupClick={signup}
+            onBackToHome={handleLogout}
+            activeApp={activeApp}
           />
           <div className="flex flex-1">
             <main className="flex-1">
@@ -156,7 +148,7 @@ const AppContent: React.FC = () => {
                   </div>
                 }
               >
-                <WelcomePage onSignupClick={signup} />
+                <WelcomePage onSignupClick={signup} onLoginClick={login} />
               </Suspense>
             </main>
           </div>

@@ -15,8 +15,6 @@ import { SellerEarnings } from './pages/SellerEarnings';
 import { SellerProfile } from './pages/SellerProfile';
 import { VerifyEmail } from './pages/VerifyEmail';
 
-console.log('Seller App - VITE_ENV:', process.env.VITE_ENV);
-
 function App() {
   const location = useLocation();
   const { isAuthenticated, user, hydrate, clearAuth, setAuthData } = useSellerAuthStore();
@@ -117,8 +115,7 @@ function App() {
         {isAuthenticated && <Sidebar />}
 
         <div
-          className={`flex-1 ${isAuthenticated ? 'lg:ml-64' : ''} ${
-            isAuthenticated ? 'mt-[69px]' : ''
+          className={`flex-1 w-full ${isAuthenticated ? 'lg:ml-64' : ''} ${isAuthenticated ? 'mt-[60px] sm:mt-[69px]' : ''
           }`}
         >
           {isAuthenticated ? (

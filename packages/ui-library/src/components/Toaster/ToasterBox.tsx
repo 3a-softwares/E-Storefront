@@ -17,14 +17,14 @@ const typeStyles: Record<string, string> = {
 export const ToasterBox: React.FC<ToasterBoxProps> = ({ message, type = 'info', onClose }) => {
   return (
     <div
-      className={`fixed top-20 right-2 z-50 min-w-xs max-w-sm px-5 py-4 rounded-lg border-l-4 shadow-2xl flex items-start gap-3 transition-all duration-300 bg-white dark:bg-gray-800 ${typeStyles[type]}`}
+      className={`fixed top-16 sm:top-20 left-2 right-2 sm:left-auto sm:right-2 z-50 min-w-0 sm:min-w-xs max-w-[calc(100vw-1rem)] sm:max-w-sm px-3 sm:px-5 py-3 sm:py-4 rounded-lg border-l-4 shadow-2xl flex items-start gap-2 sm:gap-3 transition-all duration-300 bg-white dark:bg-gray-800 ${typeStyles[type]}`}
       role="alert"
       style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)' }}
     >
-      <div className="flex-shrink-0 mt-1">
+      <div className="flex-shrink-0 mt-0.5 sm:mt-1">
         {type === 'error' && (
           <svg
-            className="w-6 h-6 text-red-500"
+            className="w-5 h-5 sm:w-6 sm:h-6 text-red-500"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -35,7 +35,7 @@ export const ToasterBox: React.FC<ToasterBoxProps> = ({ message, type = 'info', 
         )}
         {type === 'success' && (
           <svg
-            className="w-6 h-6 text-green-500"
+            className="w-5 h-5 sm:w-6 sm:h-6 text-green-500"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -46,7 +46,7 @@ export const ToasterBox: React.FC<ToasterBoxProps> = ({ message, type = 'info', 
         )}
         {type === 'info' && (
           <svg
-            className="w-6 h-6 text-blue-500"
+            className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -57,7 +57,7 @@ export const ToasterBox: React.FC<ToasterBoxProps> = ({ message, type = 'info', 
         )}
         {type === 'warning' && (
           <svg
-            className="w-6 h-6 text-yellow-500"
+            className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -71,7 +71,7 @@ export const ToasterBox: React.FC<ToasterBoxProps> = ({ message, type = 'info', 
           </svg>
         )}
       </div>
-      <div className="w-full text-sm font-medium text-gray-900 dark:text-gray-100 mt-1">
+      <div className="w-full text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100 mt-0.5 sm:mt-1">
         {message}
       </div>
       {onClose && (

@@ -55,19 +55,19 @@ export const SellerUpload: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Add New Product</h1>
-        <p className="text-gray-600">Create and manage your product listings</p>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Add New Product</h1>
+        <p className="text-sm sm:text-base text-gray-600">Create and manage your product listings</p>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-3 sm:px-4 py-2 sm:py-3 rounded-lg mb-4 sm:mb-6 text-sm sm:text-base">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-8 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
         <div>
           <Input
             label="Product Name"
@@ -91,7 +91,7 @@ export const SellerUpload: React.FC = () => {
           required
         />
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <Input
             label="Price"
             name="price"
@@ -120,7 +120,7 @@ export const SellerUpload: React.FC = () => {
             onChange={(value) => setFormData((prev) => ({ ...prev, category: value }))}
             placeholder="Select a category"
             disabled={loading}
-            className="w-full"
+            className="w-full sm:col-span-2 lg:col-span-1"
           />
         </div>
 
@@ -130,7 +130,7 @@ export const SellerUpload: React.FC = () => {
           onRemove={() => setFormData((prev) => ({ ...prev, imageUrl: '' }))}
         />
 
-        <div className="flex gap-4 pt-6">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-6">
           <Button type="submit" disabled={loading} className="flex-1">
             {loading ? <Spinner /> : 'Create Product'}
           </Button>

@@ -216,7 +216,7 @@ export const Products: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {toast.show && (
         <ToasterBox
           message={toast.message}
@@ -224,25 +224,27 @@ export const Products: React.FC = () => {
           onClose={() => setToast({ show: false, message: '', type: 'info' })}
         />
       )}
-      <div className="flex justify-between items-center">
-        <h1 className="ml-12 lg:ml-0 text-3xl font-bold text-gray-900 dark:text-white">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
           Product Management
         </h1>
-        <Button className="!w-auto" onClick={() => handleOpenModal()}>
-          <FontAwesomeIcon icon={faPlus} className="mr-1" />
-          Create Product
-        </Button>
       </div>
-      <div className="flex gap-4">
+      <div className="flex flex-row gap-3 sm:gap-4">
         <Input
           placeholder="Search products..."
           value={searchTerm}
           onChange={(e: any) => setSearchTerm(e.target.value)}
-          className="flex-1"
+          className="flex-1 !mb-0"
         />
+        <Button className="!w-auto text-sm" onClick={() => handleOpenModal()}>
+          <FontAwesomeIcon icon={faPlus} className="mr-1" />
+          <span className="hidden sm:flex">Create Product</span>
+        </Button>
       </div>
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 max-h-[400px] overflow-auto w-full">
-        <Table data={filteredProducts} columns={columns} />
+        <div className="min-w-[640px]">
+          <Table data={filteredProducts} columns={columns} />
+        </div>
       </div>
       {data?.products.pagination && (
         <div className="flex justify-center">

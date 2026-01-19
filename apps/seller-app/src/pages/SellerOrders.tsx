@@ -90,42 +90,42 @@ export const SellerOrders: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-8 py-4">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       {showToaster && (
         <ToasterBox message={toasterMsg} type="success" onClose={() => setShowToaster(false)} />
       )}
 
-      <h1 className="ml-12 lg:ml-0 text-4xl font-bold text-gray-900 dark:text-white mb-8">
+      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8">
         Order Fulfillment
       </h1>
 
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-3 sm:px-4 py-2 sm:py-3 rounded-lg mb-4 sm:mb-6 text-sm sm:text-base">
           {error}
         </div>
       )}
 
       {loading ? (
-        <div className="flex justify-center py-12">
+        <div className="flex justify-center py-8 sm:py-12">
           <Spinner />
         </div>
       ) : orders.length === 0 ? (
-        <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
-          <p className="text-gray-600 dark:text-gray-400">No orders yet</p>
+          <div className="text-center py-8 sm:py-12 bg-white dark:bg-gray-800 rounded-lg">
+            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">No orders yet</p>
         </div>
       ) : (
-        <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
           {orders.map((order) => (
             <div
               key={order._id}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-lg p-6 transition-colors"
+              className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-lg p-4 sm:p-6 transition-colors"
             >
-              <div className="flex justify-between items-start mb-4">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-4 mb-3 sm:mb-4">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
                     Order #{order.orderNumber}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {new Date(order.createdAt).toLocaleDateString()}
                   </p>
                   {order.isMultiSellerOrder && (
@@ -135,8 +135,8 @@ export const SellerOrders: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <div className="text-right">
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                <div className="sm:text-right">
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
                     {formatIndianCompact(order.sellerSubtotal ?? order.total)}
                   </p>
                   {order.isMultiSellerOrder && (

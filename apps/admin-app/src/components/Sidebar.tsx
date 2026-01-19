@@ -91,12 +91,10 @@ export const Sidebar: React.FC = () => {
     <>
       {!sidebarOpen && (
         <Button
-          size="sm"
+          size="md"
           variant={sidebarOpen ? 'ghost' : 'outline'}
           onClick={toggleSidebar}
-          className={`!w-auto fixed bg-white  ${
-            sidebarOpen ? 'top-4 left-48' : 'top-[98px] left-4'
-          } z-50 lg:hidden`}
+          className={`!w-auto !rounded-full !p-3 fixed bg-white bottom-6 right-6 z-50 lg:hidden`}
           aria-label={sidebarOpen ? 'Close menu' : 'Open menu'}
         >
           <FontAwesomeIcon

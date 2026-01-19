@@ -1,9 +1,9 @@
 import React from 'react';
 import { useUIStore } from '../store/uiStore';
 import { clearAuth, getCurrentUser } from '@3asoftwares/utils/client';
-import { Button } from '@3asoftwares/ui';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { Header as UIHeader } from '@3asoftwares/ui';
+import { useLanguage } from '../i18n/I18nContext';
+import { Language } from '../i18n';
 
 interface HeaderProps {
   onLoginClick?: () => void;
@@ -19,8 +19,8 @@ export const Header: React.FC<HeaderProps> = ({
   activeApp,
 }) => {
   const { theme, toggleTheme } = useUIStore();
+  const { language, setLanguage } = useLanguage();
 
-  // Check if user is logged in
   const user = getCurrentUser();
   const isLoggedIn = !!user;
 
@@ -32,88 +32,51 @@ export const Header: React.FC<HeaderProps> = ({
     window.location.reload();
   };
 
+  const handleLanguageChange = (lang: string) => {
+    setLanguage(lang as Language);
+  };
+
   // Get app title based on active app
-  const getAppTitle = () => {
+  const getAppName = () => {
     if (activeApp === 'admin') return 'Admin Dashboard';
     if (activeApp === 'seller') return 'Seller Portal';
     return '3A Softwares';
   };
 
+  // Build extra content for back button when in embedded app
+  const extraContent = activeApp && onBackToHome ? (
+    <button
+      onClick={onBackToHome}
+      className="flex items-center gap-1 px-2 sm:px-3 py-1.5 text-xs sm:text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+    >
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      <span className="hidden sm:inline">Back</span>
+    </button>
+  ) : undefined;
+
   return (
-    <header className="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Left section - Logo and Back button */}
-          <div className="flex items-center space-x-4">
-            {activeApp && onBackToHome && (
-              <button
-                onClick={onBackToHome}
-                className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-              >
-                <FontAwesomeIcon icon={faArrowLeft} className="w-5 h-5 mr-1" />
-                <span className="text-sm">Back</span>
-              </button>
-            )}
-            <div className="flex items-center">
-              <span className="text-xl font-bold text-gray-900 dark:text-white">
-                {getAppTitle()}
-              </span>
-              {activeApp && (
-                <span className="ml-2 px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
-                  {activeApp.charAt(0).toUpperCase() + activeApp.slice(1)}
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Right section - Theme toggle, User info, Auth buttons */}
-          <div className="flex items-center space-x-4">
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <FontAwesomeIcon icon={faSun} className="w-5 h-5" />
-              ) : (
-                <FontAwesomeIcon icon={faMoon} className="w-5 h-5" />
-              )}
-            </button>
-
-            {/* User info or Auth buttons */}
-            {isLoggedIn && user ? (
-              <div className="flex items-center space-x-3">
-                <div className="text-right hidden sm:block">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
-                    {user.name || user.email}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{user.role}</p>
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                {onLoginClick && (
-                  <Button onClick={onLoginClick} variant="outline">
-                    Login
-                  </Button>
-                )}
-                {onSignupClick && (
-                  <Button onClick={onSignupClick} variant="primary">
-                    Sign Up
-                  </Button>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </header>
+    <UIHeader
+      user={isLoggedIn && user ? { name: user.name || user.email || 'User' } : undefined}
+      onLogin={onLoginClick}
+      onLogout={handleLogout}
+      onCreateAccount={onSignupClick}
+      appName={getAppName()}
+      theme={theme}
+      onToggleTheme={toggleTheme}
+      showThemeToggle={true}
+      showLanguageSelector={true}
+      language={language}
+      onLanguageChange={handleLanguageChange}
+      extraContent={extraContent}
+      languageOptions={[
+        { value: 'en', label: 'English' },
+        { value: 'hi', label: 'Hindi' },
+        { value: 'es', label: 'Spanish' },
+        { value: 'pt', label: 'Portuguese' },
+        { value: 'fr', label: 'French' },
+      ]}
+    />
   );
 };

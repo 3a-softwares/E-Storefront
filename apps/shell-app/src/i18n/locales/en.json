@@ -89,6 +89,16 @@
         "orderTracking": "Order tracking"
       },
       "button": "Open Storefront"
+    },
+    "supportPortal": {
+      "title": "Support Portal",
+      "description": "Dedicated support center for customer inquiries, ticket management, and live assistance.",
+      "features": {
+        "ticketManagement": "Ticket management system",
+        "liveChat": "Live chat support",
+        "knowledgeBase": "Knowledge base access"
+      },
+      "button": "Open Support Portal"
     }
   },
   "cta": {

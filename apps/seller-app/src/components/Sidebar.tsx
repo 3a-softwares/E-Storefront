@@ -72,9 +72,7 @@ export const Sidebar: React.FC = () => {
         size="sm"
         variant={isOpen ? 'ghost' : 'outline'}
         onClick={() => setIsOpen(!isOpen)}
-        className={`!w-auto fixed  ${
-          isOpen ? 'top-4 left-48' : 'top-[86px] left-4'
-        } z-50 lg:hidden`}
+        className={`!w-auto !rounded-full !p-3 fixed bg-white bottom-6 right-6 z-50 lg:hidden`}
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
       >
         <FontAwesomeIcon icon={isOpen ? faTimes : faBars} className="w-5 h-5 text-gray-700" />
@@ -95,7 +93,7 @@ export const Sidebar: React.FC = () => {
         `}
       >
         <div className="w-64 h-full flex flex-col p-4">
-          <nav className="flex-1 space-y-1">
+          <nav className="flex-1 space-y-1 mt-16 md:mt-0">
             {menuItems.map((item) => (
               <Link
                 key={item.path}

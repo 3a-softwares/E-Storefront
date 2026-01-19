@@ -89,6 +89,16 @@
         "orderTracking": "Suivi des commandes"
       },
       "button": "Ouvrir la Vitrine"
+    },
+    "supportPortal": {
+      "title": "Portail Support",
+      "description": "Centre de support dédié pour les demandes clients, la gestion des tickets et l'assistance en direct.",
+      "features": {
+        "ticketManagement": "Système de gestion des tickets",
+        "liveChat": "Support chat en direct",
+        "knowledgeBase": "Accès à la base de connaissances"
+      },
+      "button": "Ouvrir le Portail Support"
     }
   },
   "cta": {

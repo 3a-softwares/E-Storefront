@@ -89,31 +89,31 @@ export const Profile: React.FC = () => {
 
   return (
     <div className="mx-auto">
-      <h1 className="ml-12 lg:ml-0 text-3xl font-bold text-gray-900 dark:text-white mb-8">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8">
         Profile
       </h1>
 
       {/* Profile Card */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-gray-600 via-gray-500 to-gray-700 px-6 py-8">
-          <div className="flex items-center gap-4">
-            <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
-              <FontAwesomeIcon icon={faUser} className="text-4xl text-white" />
+        <div className="bg-gradient-to-r from-gray-600 via-gray-500 to-gray-700 px-4 sm:px-6 py-6 sm:py-8">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-4 text-center sm:text-left">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+              <FontAwesomeIcon icon={faUser} className="text-2xl sm:text-4xl text-white" />
             </div>
-            <div>
-              <h2 className="text-2xl font-bold text-white">{user.name}</h2>
-              <p className="text-blue-100">{user.email}</p>
+            <div className="min-w-0">
+              <h2 className="text-xl sm:text-2xl font-bold text-white truncate">{user.name}</h2>
+              <p className="text-blue-100 text-sm sm:text-base truncate">{user.email}</p>
             </div>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
           {/* Message */}
           {message && (
             <div
-              className={`p-4 rounded-lg ${
+              className={`p-3 sm:p-4 rounded-lg text-sm sm:text-base ${
                 message.type === 'success'
                   ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800'
                   : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800'
@@ -124,30 +124,30 @@ export const Profile: React.FC = () => {
           )}
 
           {/* User Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {/* Name */}
-            <div className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <FontAwesomeIcon icon={faUser} className="text-gray-500 dark:text-gray-400" />
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Name</p>
-                <p className="font-medium text-gray-900 dark:text-white">{user.name}</p>
+            <div className="flex items-center gap-3 p-3 sm:p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+              <FontAwesomeIcon icon={faUser} className="text-gray-500 dark:text-gray-400 flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Name</p>
+                <p className="font-medium text-sm sm:text-base text-gray-900 dark:text-white truncate">{user.name}</p>
               </div>
             </div>
 
             {/* Email */}
-            <div className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <FontAwesomeIcon icon={faEnvelope} className="text-gray-500 dark:text-gray-400" />
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Email</p>
-                <p className="font-medium text-gray-900 dark:text-white">{user.email}</p>
+            <div className="flex items-center gap-3 p-3 sm:p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+              <FontAwesomeIcon icon={faEnvelope} className="text-gray-500 dark:text-gray-400 flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Email</p>
+                <p className="font-medium text-sm sm:text-base text-gray-900 dark:text-white truncate">{user.email}</p>
               </div>
             </div>
 
             {/* Role */}
-            <div className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <FontAwesomeIcon icon={faShieldAlt} className="text-gray-500 dark:text-gray-400" />
+            <div className="flex items-center gap-3 p-3 sm:p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+              <FontAwesomeIcon icon={faShieldAlt} className="text-gray-500 dark:text-gray-400 flex-shrink-0" />
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Role</p>
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Role</p>
                 <Badge variant="primary" className="mt-1">
                   {user.role?.toUpperCase()}
                 </Badge>

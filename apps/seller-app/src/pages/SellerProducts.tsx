@@ -115,32 +115,32 @@ export const SellerProducts: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-8 py-4">
-      <div className="flex justify-between items-center mb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="ml-12 lg:ml-0 text-4xl font-bold text-gray-900">My Products</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">My Products</h1>
+          <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">
             Manage your product inventory ({products?.length || 0} products)
           </p>
         </div>
-        <Button className="!w-auto" onClick={() => navigate('/products/new')}>
-          <FontAwesomeIcon icon={faPlus} className="mr-2" />
-          Add New Product
+        <Button className="!w-auto text-sm sm:text-base" onClick={() => navigate('/products/new')}>
+          <FontAwesomeIcon icon={faPlus} className="mr-1 sm:mr-2" />
+          <span className="hidden sm:inline">Add New</span> Product
         </Button>
       </div>
 
       {products && products.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-          <div className="text-6xl mb-4">📦</div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">No products yet</h3>
-          <p className="text-gray-600 mb-6">Start by adding your first product</p>
-          <Button onClick={() => navigate('/products/new')}>
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sm:p-8 lg:p-12 text-center">
+          <div className="text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4">📦</div>
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">No products yet</h3>
+          <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">Start by adding your first product</p>
+          <Button onClick={() => navigate('/products/new')} className="text-sm sm:text-base">
             <FontAwesomeIcon icon={faPlus} className="mr-2" />
             Add Your First Product
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {products?.map((product) => (
             <div
               key={product._id}

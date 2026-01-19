@@ -28,14 +28,14 @@ export const Confirm: React.FC<ConfirmProps> = ({
 }) => {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm transition-all">
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-8 w-full max-w-sm border border-gray-200 dark:border-gray-700 animate-fade-in">
-        <div className="flex items-center gap-2 mb-4">
-          <FontAwesomeIcon icon={faExclamationCircle} className="w-5 h-5" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black bg-opacity-40 backdrop-blur-sm transition-all">
+      <div className="bg-white dark:bg-gray-900 rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 w-full max-w-[95vw] sm:max-w-sm border border-gray-200 dark:border-gray-700 animate-fade-in">
+        <div className="flex items-center gap-2 mb-3 sm:mb-4">
+          <FontAwesomeIcon icon={faExclamationCircle} className="w-4 h-4 sm:w-5 sm:h-5" />
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>
         </div>
-        <p className="mb-6 text-gray-700 dark:text-gray-200 text-base leading-relaxed">{message}</p>
-        <div className="flex gap-3 justify-end">
+        <p className="mb-4 sm:mb-6 text-sm sm:text-base text-gray-700 dark:text-gray-200 leading-relaxed">{message}</p>
+        <div className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-3 justify-end">
           <Button variant="outline" size="sm" onClick={onCancel} disabled={loading}>
             {cancelText}
           </Button>
