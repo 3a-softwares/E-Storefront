@@ -2,6 +2,14 @@
 
 Support ticket management service for the E-Storefront platform.
 
+## 📚 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Architecture](../../docs/services/ticket-service/ARCHITECTURE.md) | Service architecture & database schema |
+| [API Reference](../../docs/services/ticket-service/API.md) | REST API endpoints |
+| [Testing Guide](../../docs/services/ticket-service/TESTING.md) | Testing strategies |
+
 ## Features
 
 - Create, read, update, delete support tickets
