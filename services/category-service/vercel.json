@@ -1,0 +1,11 @@
+{
+  "git": {
+    "deploymentEnabled": true
+  },
+  "installCommand": "cd ../.. && yarn install --frozen-lockfile",
+  "buildCommand": "cd ../.. && yarn build:packages && yarn workspace @3asoftwares/category-service build",
+  "outputDirectory": "services/category-service/dist",
+  "framework": null,
+  "regions": ["iad1"],
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.js" }]
+}

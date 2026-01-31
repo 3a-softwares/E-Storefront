@@ -81,7 +81,8 @@
     "health": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1",
     "health:backend": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1 -Services",
     "health:frontend": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1 -Frontend",
-    "health:verbose": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1 -Verbose"
+    "health:verbose": "powershell -ExecutionPolicy Bypass -File ./scripts/health-check.ps1 -Verbose",
+    "vercel-build": "yarn install --frozen-lockfile && yarn build:packages && yarn build:category"
   },
   "dependencies": {
     "autoprefixer": "^10.4.23",
