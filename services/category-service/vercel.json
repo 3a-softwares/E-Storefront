@@ -5,11 +5,6 @@
   "installCommand": "cd ../.. && yarn install --frozen-lockfile --production=false",
   "buildCommand": "cd ../.. && yarn build:packages && yarn workspace @3asoftwares/category-service build && cp services/category-service/dist/api/index.js services/category-service/api/index.js",
   "outputDirectory": "services/category-service",
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "framework": null,
   "regions": ["iad1"],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.js" }]
